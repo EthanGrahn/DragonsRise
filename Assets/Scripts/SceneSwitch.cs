@@ -15,4 +15,9 @@ public class SceneSwitch : MonoBehaviour {
         SceneManager.LoadScene(sceneName);
         Debug.Log("Scene changed to " + sceneName);
     }
+
+    public void EndGame()
+    {
+        Application.Quit();
+    }
 }

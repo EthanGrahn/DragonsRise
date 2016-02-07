@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Combat.cs" />
+     <Compile Include="Assets\Scripts\CombatButtons.cs" />
      <Compile Include="Assets\Scripts\MapGeneration.cs" />
      <Compile Include="Assets\Scripts\SceneSwitch.cs" />
      <Compile Include="Assets\Scripts\Stats.cs" />

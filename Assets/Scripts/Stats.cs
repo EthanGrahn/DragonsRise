@@ -5,6 +5,7 @@ public class Stats : MonoBehaviour {
 
     public int max_health;
     public int current_health;
+    public int healing_power;
     public int base_damage;
     public int element_fire;
     public int element_water;
@@ -36,6 +37,11 @@ public class Stats : MonoBehaviour {
         element_fire += fire;
         element_water += water;
         element_earth += earth;
+    }
+
+    public void healingChange( int amount )
+    {
+        healing_power += amount;
     }
 
     public void levelChange( int amount )
