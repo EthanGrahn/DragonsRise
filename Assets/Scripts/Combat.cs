@@ -12,17 +12,12 @@ public class Combat : MonoBehaviour {
     private bool selfDead = false;
     private bool maxHealth = false;
     private Text enemyHit;
-    private Text playerHealth;
-    private Text enemyHealth;
 
     void Start()
     {
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
-
         enemyHit = GameObject.Find("enemyHitTxt").GetComponent<Text>();
-        playerHealth = GameObject.Find("playerHealthTxt").GetComponent<Text>();
-        enemyHealth = GameObject.Find("enemyHealthTxt").GetComponent<Text>();
     }
 
     void Update()
@@ -33,16 +28,6 @@ public class Combat : MonoBehaviour {
             enemyDead = true;
         if (selfStats.current_health <= 0)
             selfDead = true;
-
-        playerHealth.text = "Health: " + selfStats.current_health;
-        enemyHealth.text = "Health: " + enemyStats.current_health;
-    }
-
-    IEnumerator enemyDamage(float time)
-    {
-        enemyHit.text = "-20";
-        yield return new WaitForSeconds(2);
-        enemyHit.text = "";
     }
 
     public void Attack()
@@ -53,7 +38,9 @@ public class Combat : MonoBehaviour {
             int health = enemyStats.current_health;
             Debug.Log("Enemy health = " + health);
             enemyHit.color = Color.red;
-            enemyDamage(2);
+            enemyHit.text = "-20";
+
+            enemyHit.text = "";
         } 
         else
             Debug.Log("Enemy dead");
