@@ -6,10 +6,12 @@ public class Stats : MonoBehaviour {
     public int max_health;
     public int current_health;
     public int healing_power;
-    public int base_damage;
-    public int element_fire;
-    public int element_water;
-    public int element_earth;
+    public int attack;
+    public int speed;
+    public int special_fire;
+    public int special_ice;
+    public int special_wind;
+    public int special_electric;
     public int level;
 
     public void damage( int amount )
@@ -29,14 +31,11 @@ public class Stats : MonoBehaviour {
 
     public void base_damageChange( int amount )
     {
-        base_damage += amount;
+        attack += amount;
     }
 
-    public void elementalDamageChange( int fire, int water, int earth )
+    public void elementalDamageChange()
     {
-        element_fire += fire;
-        element_water += water;
-        element_earth += earth;
     }
 
     public void healingChange( int amount )

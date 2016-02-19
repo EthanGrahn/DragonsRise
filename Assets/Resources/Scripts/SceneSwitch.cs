@@ -10,6 +10,14 @@ public class SceneSwitch : MonoBehaviour {
       Enter scene name to set scene that will be switched to
       =======================================================*/  
 
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Debug.Log("Escape");
+        }
+    }
+
     public void SwitchScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

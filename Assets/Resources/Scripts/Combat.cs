@@ -22,6 +22,8 @@ public class Combat : MonoBehaviour {
         //Initializes stat veriables along with overhead text boxes
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
+
+        //Initializes text components for the overhead displays
         enemyHit = GameObject.Find("enemyHitTxt").GetComponent<Text>();
         selfHit = GameObject.Find("playerHitTxt").GetComponent<Text>();
         enemyHealthTxt = GameObject.Find("enemyHealthTxt").GetComponent<Text>();
@@ -52,13 +54,14 @@ public class Combat : MonoBehaviour {
             selfDead = false;
 
         //Displays constant health above characters' head
+        //Adjust to use with health bars
         enemyHealthTxt.text = "Health: " + enemyStats.current_health;
         selfHealthTxt.text = "Health: " + selfStats.current_health;
     }
 
     private int attackCheck(Stats tmp)
     {
-        int damage = tmp.base_damage;
+        int damage = tmp.attack;
         return damage;
     }
 
@@ -66,25 +69,24 @@ public class Combat : MonoBehaviour {
     {
         if (!enemyDead)
         {
-            enemyStats.damage(attackCheck(selfStats));
-            int health = enemyStats.current_health;
-            //Debug.Log("Enemy health = " + health);
+            //Calls function to calculate amount of damage dealt
+            int attackAmt = attackCheck(selfStats);
+            enemyStats.damage(attackAmt);
+
+            //Display attack damage
             enemyHit.color = Color.red;
             enemyHit.CrossFadeAlpha(1, 0, true);
-            enemyHit.text = "-20";
+            enemyHit.text = attackAmt.ToString();
             enemyHit.CrossFadeAlpha(0, 1, false);
         } 
         else
             Debug.Log("Enemy dead");
     }
 
-    public void Heal()
-    {
+    public void Defend()
+    {/* Rethink this for defense mechanics
         if (!selfDead && !maxHealth)
         {
-            int health = selfStats.current_health;
-            selfStats.heal(10);
-            //Debug.Log("Character health = " + health);
             selfHit.color = Color.green;
             selfHit.CrossFadeAlpha(1, 0, true);
             selfHit.text = "+10";
@@ -92,34 +94,26 @@ public class Combat : MonoBehaviour {
         } else if (maxHealth)
             Debug.Log("You are at max health");
         else
-            Debug.Log("You are dead");
+            Debug.Log("You are dead");*/
     }
 
-    public void enemyHeal()
+    public void enemyDefend()
     {
-        if (!enemyDead && !enemyMaxHealth)
-        {
-            int health = enemyStats.current_health;
-            enemyStats.heal(10);
-           // Debug.Log("Enemy health = " + health);
-            enemyHit.color = Color.green;
-            enemyHit.CrossFadeAlpha(1, 0, true);
-            enemyHit.text = "+10";
-            enemyHit.CrossFadeAlpha(0, 1, false);
-        } else if (maxHealth)
-            Debug.Log("Enemy at max health");
-        else
-            Debug.Log("Enemy is dead");
+        
     }
 
     public void Hit()
     {
         if (!selfDead)
         {
-            selfStats.damage(attackCheck(enemyStats));
+            //Calls function to calculate damage dealt
+            int attackAmt = attackCheck(enemyStats);
+            selfStats.damage(attackAmt);
+
+            //Display attack damage
             selfHit.color = Color.red;
             selfHit.CrossFadeAlpha(1, 0, true);
-            selfHit.text = "-5";
+            selfHit.text = attackAmt.ToString();
             selfHit.CrossFadeAlpha(0, 1, false);
         } 
         else

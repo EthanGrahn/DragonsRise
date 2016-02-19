@@ -45,11 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Combat.cs" />
-     <Compile Include="Assets\Scripts\CombatButtons.cs" />
-     <Compile Include="Assets\Scripts\MapGeneration.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitch.cs" />
-     <Compile Include="Assets\Scripts\Stats.cs" />
+     <Compile Include="Assets\Resources\Scripts\Combat.cs" />
+     <Compile Include="Assets\Resources\Scripts\CombatButtons.cs" />
+     <Compile Include="Assets\Resources\Scripts\MapGeneration.cs" />
+     <Compile Include="Assets\Resources\Scripts\Mapping.cs" />
+     <Compile Include="Assets\Resources\Scripts\SceneSwitch.cs" />
+     <Compile Include="Assets\Resources\Scripts\Stats.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
