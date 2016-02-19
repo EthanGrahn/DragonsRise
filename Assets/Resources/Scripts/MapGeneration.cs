@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MapGeneration : MonoBehaviour {
 
     // 5 x 5 map
+    //testing changes
 
     private GameObject[] pieces = new GameObject[36];
 
