@@ -8,5 +8,5 @@ public class Mapping : MonoBehaviour {
     public GameObject left;
     public GameObject down;
     public GameObject right;
-    public string scene;
+    public Sprite background_img;
 }

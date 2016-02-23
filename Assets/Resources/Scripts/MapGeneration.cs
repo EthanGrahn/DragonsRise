@@ -4,16 +4,20 @@ using System.Collections.Generic;
 
 public class MapGeneration : MonoBehaviour {
 
-    // 5 x 5 map
+    // 6 x 6 map
 
-    private GameObject[] pieces = new GameObject[36];
+    public GameObject[] pieces = new GameObject[36];
+    public int current_index;
+    private SpriteRenderer background;
 
 	// Begins Generation
 	void Start ()
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
+        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
+        current_index = 1;
 
-        // Stores all map pieces and initializes bool array to false
+        // Stores all map pieces
         for (int i = 0; i < pieces.Length; i++)
             pieces [i] = GameObject.Find("Map_" + (i + 1));
 
@@ -22,6 +26,19 @@ public class MapGeneration : MonoBehaviour {
 
         // Sets the index and where each direction leads
         Generate();
+    }
+    
+    void Update()
+    {
+        switch (current_index)
+        {
+            case 1:
+                background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_hub");
+                break;
+            default:
+                background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_default");
+                break;
+        }  
     }
 
     private void Generate()
@@ -39,10 +56,10 @@ public class MapGeneration : MonoBehaviour {
             switch (pieces [i].GetComponent<Mapping>().index)
             {
                 case 1:
-                    pieces [i].GetComponent<Mapping>().scene = "Hub";
+                    pieces [i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Background_hub");
                     break;
                 case 36:
-                    pieces [i].GetComponent<Mapping>().scene = "Last_Room";
+                    
                     break;
             }
         }
