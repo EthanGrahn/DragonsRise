@@ -8,13 +8,11 @@ public class MapGeneration : MonoBehaviour {
 
     public GameObject[] pieces = new GameObject[36];
     public int current_index;
-    private SpriteRenderer background;
 
 	// Begins Generation
 	void Start ()
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
-        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
         current_index = 1;
 
         // Stores all map pieces
@@ -26,19 +24,9 @@ public class MapGeneration : MonoBehaviour {
 
         // Sets the index and where each direction leads
         Generate();
-    }
-    
-    void Update()
-    {
-        switch (current_index)
-        {
-            case 1:
-                background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_hub");
-                break;
-            default:
-                background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_default");
-                break;
-        }  
+
+        // Calls the start of the MapUpdater
+        Done();
     }
 
     private void Generate()
@@ -50,7 +38,7 @@ public class MapGeneration : MonoBehaviour {
         // Displays the map pieces
         Place();
 
-        // Sets the corresponding scene of the map piece ===============================================================================
+        // Sets the corresponding backround of the map piece ===============================================================================
         for (int i = 0; i < pieces.Length; i++)
         {
             switch (pieces [i].GetComponent<Mapping>().index)
@@ -66,7 +54,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private void Scramble()
-    {
+    {   // Used to randomize the indexes by scrambling the array
         for (int t = 0; t < pieces.Length; t++ )
         {
             GameObject tmp = pieces[t];
@@ -77,7 +65,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private void Place()
-    {
+    {   // Sets the sprites for the map overlay
         for (int i = 0; i < pieces.Length; i++)
         {
             if (pieces [i].GetComponent<Mapping>().index == 1)
@@ -85,5 +73,10 @@ public class MapGeneration : MonoBehaviour {
             else
                 pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map");
         }
+    }
+
+    private void Done()
+    {
+        GameObject.Find("MapUpdater").GetComponent<MapUpdater>().Begin();
     }
 }

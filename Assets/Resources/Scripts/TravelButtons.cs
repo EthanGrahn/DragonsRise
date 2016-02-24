@@ -71,5 +71,7 @@ public class TravelButtons : MonoBehaviour {
     private void Adjust()
     {   // Changes the current in the MapGenerator object so it can do its work
         GameObject.Find("MapGenerator").GetComponent<MapGeneration>().current_index = current_index;
+        // Refreshes the MapUpdater to keep track of colors and backgrounds
+        GameObject.Find("MapUpdater").GetComponent<MapUpdater>().Refresh();
     }
 }
