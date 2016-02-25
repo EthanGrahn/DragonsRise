@@ -15,13 +15,11 @@ public class CombatButtons : MonoBehaviour {
         selectedIndex = 2;
 
         //Initialization of the button images
-        defendIcon = GameObject.Find("Defend").GetComponent<Image>();
         fightIcon = GameObject.Find("Fight").GetComponent<Image>();
         itemIcon = GameObject.Find("Item").GetComponent<Image>();
         skillIcon = GameObject.Find("Skill").GetComponent<Image>();
 
         //Sets the default opacity of the images
-        defendIcon.color = new Color(1f, 1f, 1f, 0.5f);
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
@@ -45,7 +43,7 @@ public class CombatButtons : MonoBehaviour {
         else if (Input.GetKeyUp("right"))
         {
             //Debug.Log("Right Arrow");
-            if (selectedIndex < 4)
+            if (selectedIndex < 3)
             {
                 selectedIndex++;
                 ColorBrain(selectedIndex);
@@ -63,15 +61,12 @@ public class CombatButtons : MonoBehaviour {
         switch (num)
         {
             case 1:
-                Defend();
+                Item();
                 break;
             case 2:
                 Fight();
                 break;
             case 3:
-                Item();
-                break;
-            case 4:
                 Skill();
                 break;
         }
@@ -82,31 +77,19 @@ public class CombatButtons : MonoBehaviour {
         switch (num)
         {
             case 1:
-                doDefend();
+                doItem();
                 break;
             case 2:
                 doFight();
                 break;
             case 3:
-                doItem();
-                break;
-            case 4:
                 doSkill();
                 break;
         }
     }
 
-    private void Defend()
-    {
-        defendIcon.color = new Color(1f, 1f, 1f, 1f);
-        fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
-        itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
-        skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
-    }
-
     private void Fight()
     {
-        defendIcon.color = new Color(1f, 1f, 1f, 0.5f);
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
@@ -114,7 +97,6 @@ public class CombatButtons : MonoBehaviour {
 
     private void Item()
     {
-        defendIcon.color = new Color(1f, 1f, 1f, 0.5f);
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 1f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
@@ -122,15 +104,9 @@ public class CombatButtons : MonoBehaviour {
 
     private void Skill()
     {
-        defendIcon.color = new Color(1f, 1f, 1f, 0.5f);
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 1f);
-    }
-
-    private void doDefend()
-    {
-
     }
 
     private void doFight()
