@@ -4,12 +4,12 @@ using System.Collections;
 
 public class CombatButtons : MonoBehaviour {
 
-    private Image defendIcon;
     private Image fightIcon;
     private Image itemIcon;
     private Image skillIcon;
     private int selectedIndex;
     private Combat combat;
+    private GameObject itemBox;
 
 	void Start () {
         selectedIndex = 2;
@@ -26,12 +26,15 @@ public class CombatButtons : MonoBehaviour {
 
         //Storing the combat script for ease of use
         combat = GameObject.Find("CombatManager").GetComponent<Combat>();
-	}
+
+        itemBox = GameObject.Find("ItemBox");
+        itemBox.SetActive(false);
+    }
 	
 
 	void Update () {
         //Update checking for key presses
-        if (Input.GetKeyUp("left"))
+        if (Input.GetKeyUp("left") && !itemBox.activeSelf)
         {
             //Debug.Log("Left Arrow");
             if (selectedIndex > 1)
@@ -40,7 +43,7 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         } 
-        else if (Input.GetKeyUp("right"))
+        else if (Input.GetKeyUp("right") && !itemBox.activeSelf)
         {
             //Debug.Log("Right Arrow");
             if (selectedIndex < 3)
@@ -52,9 +55,13 @@ public class CombatButtons : MonoBehaviour {
 
         if (Input.GetKeyUp("return"))
         {
-            ButtonBrain(selectedIndex);
+            if (!itemBox.activeSelf)
+                ButtonBrain(selectedIndex);
         }
-	}
+
+        if (Input.GetKeyUp("escape") && itemBox.activeSelf)
+            itemBox.SetActive(false);
+    }
 
     private void ColorBrain(int num)
     {
@@ -117,7 +124,7 @@ public class CombatButtons : MonoBehaviour {
 
     private void doItem()
     {
-
+        itemBox.SetActive(true);
     }
 
     private void doSkill()

@@ -16,6 +16,8 @@ public class Combat : MonoBehaviour {
     private Text selfHit;
     private Text enemyHealthTxt;
     private Text selfHealthTxt;
+    private RectTransform healthBar;
+    private RectTransform bondBar;
 
     void Start()
     {
@@ -23,11 +25,11 @@ public class Combat : MonoBehaviour {
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
 
-        //Initializes text components for the overhead displays
-        enemyHit = GameObject.Find("enemyHitTxt").GetComponent<Text>();
-        selfHit = GameObject.Find("playerHitTxt").GetComponent<Text>();
-        enemyHealthTxt = GameObject.Find("enemyHealthTxt").GetComponent<Text>();
-        selfHealthTxt = GameObject.Find("playerHealthTxt").GetComponent<Text>();
+        selfHit = GameObject.Find("txtSelfHit").GetComponent<Text>();
+        enemyHit = GameObject.Find("txtEnemyHit").GetComponent<Text>();
+
+        healthBar = GameObject.Find("barHealth").GetComponent<RectTransform>();
+        bondBar = GameObject.Find("barBond").GetComponent<RectTransform>();
     }
 
     void Update()
@@ -53,10 +55,7 @@ public class Combat : MonoBehaviour {
         else
             selfDead = false;
 
-        //Displays constant health above characters' head
-        //Adjust to use with health bars
-        enemyHealthTxt.text = "Health: " + enemyStats.current_health;
-        selfHealthTxt.text = "Health: " + selfStats.current_health;
+        healthBar.sizeDelta = new Vector2(selfStats.current_health, (float)12.2);
     }
 
     private int attackCheck(Stats tmp)
@@ -81,25 +80,6 @@ public class Combat : MonoBehaviour {
         } 
         else
             Debug.Log("Enemy dead");
-    }
-
-    public void Defend()
-    {/* Rethink this for defense mechanics
-        if (!selfDead && !maxHealth)
-        {
-            selfHit.color = Color.green;
-            selfHit.CrossFadeAlpha(1, 0, true);
-            selfHit.text = "+10";
-            selfHit.CrossFadeAlpha(0, 1, false);
-        } else if (maxHealth)
-            Debug.Log("You are at max health");
-        else
-            Debug.Log("You are dead");*/
-    }
-
-    public void enemyDefend()
-    {
-        
     }
 
     public void Hit()
