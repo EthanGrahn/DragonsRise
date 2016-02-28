@@ -8,11 +8,15 @@ public class CombatButtons : MonoBehaviour {
     private Image itemIcon;
     private Image skillIcon;
     private int selectedIndex;
+    private int itemIndex;
     private Combat combat;
     private GameObject itemBox;
+    private GameObject itemHighlight;
+    private Inventory inventory;
 
 	void Start () {
         selectedIndex = 2;
+        itemIndex = 1;
 
         //Initialization of the button images
         fightIcon = GameObject.Find("Fight").GetComponent<Image>();
@@ -26,6 +30,11 @@ public class CombatButtons : MonoBehaviour {
 
         //Storing the combat script for ease of use
         combat = GameObject.Find("CombatManager").GetComponent<Combat>();
+
+        itemHighlight = GameObject.Find("barItemHighlight");
+        itemHighlight.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
+
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
 
         itemBox = GameObject.Find("ItemBox");
         itemBox.SetActive(false);
@@ -53,11 +62,30 @@ public class CombatButtons : MonoBehaviour {
             }
         }
 
+
+
+        if (itemBox.activeSelf && Input.GetKeyUp("up") && itemIndex > 1)
+        {
+            itemIndex--;
+            HighlightMovement(1);
+        }
+        else if (itemBox.activeSelf && Input.GetKeyUp("down") && itemIndex < 5)
+        {
+            itemIndex++;
+            HighlightMovement(2);
+        }
+
+
+
         if (Input.GetKeyUp("return"))
         {
             if (!itemBox.activeSelf)
                 ButtonBrain(selectedIndex);
+            else if (itemBox.activeSelf)
+                ItemBrain(itemIndex);
         }
+
+
 
         if (Input.GetKeyUp("escape") && itemBox.activeSelf)
             itemBox.SetActive(false);
@@ -95,6 +123,49 @@ public class CombatButtons : MonoBehaviour {
         }
     }
 
+    private void ItemBrain(int num)
+    {
+        string itemName = "";
+        Text itemText = GameObject.Find("ItemText").GetComponent<Text>();
+
+        switch (num)
+        {
+            case 1:
+                itemName = inventory.item1.GetComponent<ItemStats>().itemName;
+                itemText.text = "Using " + itemName + "...";
+                break;
+            case 2:
+                itemName = inventory.item2.GetComponent<ItemStats>().itemName;
+                itemText.text = "Using " + itemName + "...";
+                break;
+            case 3:
+                itemName = inventory.item3.GetComponent<ItemStats>().itemName;
+                itemText.text = "Using " + itemName + "...";
+                break;
+            case 4:
+                itemName = inventory.item4.GetComponent<ItemStats>().itemName;
+                itemText.text = "Using " + itemName + "...";
+                break;
+            case 5:
+                itemName = inventory.item5.GetComponent<ItemStats>().itemName;
+                itemText.text = "Using " + itemName + "...";
+                break;
+        }
+    }
+
+    private void HighlightMovement(int num)
+    {
+        switch (num)
+        {
+            case 1:
+                itemHighlight.GetComponent<RectTransform>().localPosition += new Vector3(0, 25, 0);
+                break;
+            case 2:
+                itemHighlight.GetComponent<RectTransform>().localPosition += new Vector3(0, -25, 0);
+                break;
+        }
+    }
+
     private void Fight()
     {
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
@@ -124,7 +195,10 @@ public class CombatButtons : MonoBehaviour {
 
     private void doItem()
     {
+        itemIndex = 1;
+        itemHighlight.GetComponent<RectTransform>().localPosition = new Vector3(-89.67501f, -90.02f, 0);
         itemBox.SetActive(true);
+        GameObject.Find("ItemText").GetComponent<Text>().text = "";
     }
 
     private void doSkill()
