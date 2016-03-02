@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 
-    public GameObject item1;
-    public GameObject item2;
-    public GameObject item3;
-    public GameObject item4;
-    public GameObject item5;
+    public int inventoryCount;
+    public List<GameObject> items = new List<GameObject>();
+
+    void Start()
+    {
+        inventoryCount = 1;
+    }
 }

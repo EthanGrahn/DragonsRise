@@ -77,6 +77,7 @@ public class MapGeneration : MonoBehaviour {
 
     private void Done()
     {
-        GameObject.Find("MapUpdater").GetComponent<MapUpdater>().Begin();
+        GameObject.Find("GameManager").GetComponent<MapUpdater>().Begin();
+        GameObject.Find("GameManager").GetComponent<TravelButtons>().Begin();
     }
 }

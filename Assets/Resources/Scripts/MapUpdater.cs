@@ -13,8 +13,8 @@ public class MapUpdater : MonoBehaviour {
 	public void Begin () 
     {
         started = true;
-        pieces = GameObject.Find("MapGenerator").GetComponent<MapGeneration>().pieces;
-        current_index = GameObject.Find("MapGenerator").GetComponent<MapGeneration>().current_index;
+        pieces = GameObject.Find("GameManager").GetComponent<MapGeneration>().pieces;
+        current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
         current_piece_img = pieces [current_index - 1].GetComponent<SpriteRenderer>();
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
@@ -45,7 +45,7 @@ public class MapUpdater : MonoBehaviour {
 
     public void Refresh()
     {   // Operates similarly to Start()
-        current_index = GameObject.Find("MapGenerator").GetComponent<MapGeneration>().current_index;
+        current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
         current_piece_img.color = Color.white; // Resets the highlight color of the map tile
         current_piece_img = pieces [current_index - 1].GetComponent<SpriteRenderer>();

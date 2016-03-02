@@ -47,6 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\Resources\Scripts\Combat.cs" />
      <Compile Include="Assets\Resources\Scripts\CombatButtons.cs" />
+     <Compile Include="Assets\Resources\Scripts\Inventory.cs" />
+     <Compile Include="Assets\Resources\Scripts\InventoryDisplay.cs" />
+     <Compile Include="Assets\Resources\Scripts\ItemStats.cs" />
      <Compile Include="Assets\Resources\Scripts\MapGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\MapUpdater.cs" />
      <Compile Include="Assets\Resources\Scripts\Mapping.cs" />

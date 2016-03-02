@@ -7,14 +7,12 @@ public class TravelButtons : MonoBehaviour {
     private GameObject[] pieces;
     private Mapping current_piece;
 
-    void Start()
+    public void Begin()
     {
-        pieces = GameObject.Find("MapGenerator").GetComponent<MapGeneration>().pieces;
-        current_index = GameObject.Find("MapGenerator").GetComponent<MapGeneration>().current_index;
+        pieces = GameObject.Find("GameManager").GetComponent<MapGeneration>().pieces;
+        current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
     }
-
-    // Shouldn't need the update function, but I can add it back in if needed
 
 	public void Left()
     {
@@ -70,8 +68,8 @@ public class TravelButtons : MonoBehaviour {
 
     private void Adjust()
     {   // Changes the current in the MapGenerator object so it can do its work
-        GameObject.Find("MapGenerator").GetComponent<MapGeneration>().current_index = current_index;
+        GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index = current_index;
         // Refreshes the MapUpdater to keep track of colors and backgrounds
-        GameObject.Find("MapUpdater").GetComponent<MapUpdater>().Refresh();
+        GameObject.Find("GameManager").GetComponent<MapUpdater>().Refresh();
     }
 }
