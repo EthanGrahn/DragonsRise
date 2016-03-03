@@ -55,12 +55,33 @@ public class Combat : MonoBehaviour {
         else
             selfDead = false;
 
-        healthBar.sizeDelta = new Vector2(selfStats.current_health, (float)12.2);
+        healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
+        bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);
     }
 
-    private int attackCheck(Stats tmp)
+    private double attackCheck(Stats tmp)
     {
-        int damage = tmp.attack;
+        int toneIndex = GameObject.Find("GameManager").GetComponent<CombatButtons>().toneIndex;
+        double damage = tmp.attack;
+
+        switch (toneIndex)
+        {
+            case 1:
+                if (bondBar.rect.width < 100)
+                    GameObject.Find("Character").GetComponent<Stats>().bond += 2;
+                break;
+            case 2:
+                if (bondBar.rect.width < 100)
+                    GameObject.Find("Character").GetComponent<Stats>().bond += 5;
+                damage = damage * 0.9;
+                break;
+            case 3:
+                if (bondBar.rect.width > 0)
+                    GameObject.Find("Character").GetComponent<Stats>().bond -= 8;
+                damage = damage * 1.5;
+                break;
+        }
+
         return damage;
     }
 
@@ -69,7 +90,7 @@ public class Combat : MonoBehaviour {
         if (!enemyDead)
         {
             //Calls function to calculate amount of damage dealt
-            int attackAmt = attackCheck(selfStats);
+            double attackAmt = attackCheck(selfStats);
             enemyStats.damage(attackAmt);
 
             //Display attack damage
@@ -87,7 +108,7 @@ public class Combat : MonoBehaviour {
         if (!selfDead)
         {
             //Calls function to calculate damage dealt
-            int attackAmt = attackCheck(enemyStats);
+            double attackAmt = attackCheck(enemyStats);
             selfStats.damage(attackAmt);
 
             //Display attack damage

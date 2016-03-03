@@ -9,12 +9,14 @@ public class CombatButtons : MonoBehaviour {
     private Image skillIcon;
     private int selectedIndex;
     public int itemIndex;
+    public int toneIndex;
     private Combat combat;
     private GameObject itemBox;
 
 	void Start () {
         selectedIndex = 2;
         itemIndex = 1;
+        toneIndex = 1;
 
         //Initialization of the button images
         fightIcon = GameObject.Find("Fight").GetComponent<Image>();
@@ -54,16 +56,36 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         }
+        else if (Input.GetKeyUp("q") && !itemBox.activeSelf)
+        {
+            toneIndex--;
+
+            if (toneIndex == 0)
+                toneIndex = 3;
+
+            ToneAdjust(toneIndex);
+        }
+        else if (Input.GetKeyUp("e") && !itemBox.activeSelf)
+        {
+            toneIndex++;
+
+            if (toneIndex == 4)
+                toneIndex = 1;
+
+            ToneAdjust(toneIndex);
+        }
 
 
 
         if (itemBox.activeSelf && Input.GetKeyUp("up") && itemIndex > 1)
         {
             itemIndex--;
+            ItemBrain(itemIndex);
         }
         else if (itemBox.activeSelf && Input.GetKeyUp("down") && itemIndex < 5)
         {
             itemIndex++;
+            ItemBrain(itemIndex);
         }
 
 
@@ -114,6 +136,64 @@ public class CombatButtons : MonoBehaviour {
         }
     }
 
+    private void ItemBrain(int num)
+    {
+        Text item1 = GameObject.Find("txtItem1").GetComponent<Text>();
+        Text item2 = GameObject.Find("txtItem2").GetComponent<Text>();
+        Text item3 = GameObject.Find("txtItem3").GetComponent<Text>();
+        Text item4 = GameObject.Find("txtItem4").GetComponent<Text>();
+
+        switch (num)
+        {
+            case 1:
+                item1.color = new Color(r: 0, g: 125, b: 255);
+                item4.color = new Color(r: 255, g: 255, b: 255);
+                item2.color = new Color(r: 255, g: 125, b: 255);
+                break;
+            case 2:
+                item2.color = new Color(r: 0, g: 125, b: 255);
+                item1.color = new Color(r: 255, g: 255, b: 255);
+                item3.color = new Color(r: 255, g: 125, b: 255);
+                break;
+            case 3:
+                item3.color = new Color(r: 0, g: 125, b: 255);
+                item2.color = new Color(r: 255, g: 255, b: 255);
+                item4.color = new Color(r: 255, g: 125, b: 255);
+                break;
+            case 4:
+                item4.color = new Color(r: 0, g: 125, b: 255);
+                item3.color = new Color(r: 255, g: 255, b: 255);
+                item1.color = new Color(r: 255, g: 125, b: 255);
+                break;
+        }
+    }
+
+    private void ToneAdjust(int num)
+    {
+        Text leftTone = GameObject.Find("txtTone_left").GetComponent<Text>();
+        Text centerTone = GameObject.Find("txtTone_center").GetComponent<Text>();
+        Text rightTone = GameObject.Find("txtTone_right").GetComponent<Text>();
+
+        switch (num)
+        {
+            case 1:
+                leftTone.text = "Harsh";
+                centerTone.text = "Cautious";
+                rightTone.text = "Encouraging";
+                break;
+            case 2:
+                leftTone.text = "Cautious";
+                centerTone.text = "Encouraging";
+                rightTone.text = "Harsh";
+                break;
+            case 3:
+                leftTone.text = "Encouraging";
+                centerTone.text = "Harsh";
+                rightTone.text = "Cautious";
+                break;
+        }
+    }
+
     private void Fight()
     {
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
@@ -145,6 +225,11 @@ public class CombatButtons : MonoBehaviour {
     {
         itemIndex = 1;
         itemBox.SetActive(true);
+        GameObject.Find("txtItem1").GetComponent<Text>().color = new Color(r: 255, g: 255, b: 255);
+        GameObject.Find("txtItem2").GetComponent<Text>().color = new Color(r: 255, g: 125, b: 255);
+        GameObject.Find("txtItem3").GetComponent<Text>().color = new Color(r: 255, g: 255, b: 255);
+        GameObject.Find("txtItem4").GetComponent<Text>().color = new Color(r: 255, g: 125, b: 255);
+        ItemBrain(itemIndex);
         GameObject.Find("GameManager").GetComponent<InventoryDisplay>().Refresh();
     }
 

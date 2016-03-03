@@ -3,20 +3,20 @@ using System.Collections;
 
 public class Stats : MonoBehaviour {
 
-    public int max_health;
-    public int current_health;
-    public int attack;
-    public int special_fire;
-    public int special_ice;
-    public int bond;
+    public double max_health;
+    public double current_health;
+    public double attack;
+    public double special_fire;
+    public double special_ice;
+    public double bond;
     public int level;
 
-    public void damage( int amount )
+    public void damage( double amount )
     {
         current_health -= amount;
     }
 
-    public void heal( int amount )
+    public void heal( double amount )
     {
         current_health += amount;
     }
