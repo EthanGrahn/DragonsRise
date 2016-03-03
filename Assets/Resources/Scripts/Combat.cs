@@ -103,6 +103,27 @@ public class Combat : MonoBehaviour {
             Debug.Log("Enemy dead");
     }
 
+    public void Special()
+    {
+        GameObject.Find("specialSpawn").GetComponent<SpecialAttack>().Fire();
+    }
+
+    public void SpecialHit()
+    {
+        if (!enemyDead)
+        {
+            enemyStats.damage(25);
+
+            //Display attack damage
+            enemyHit.color = Color.red;
+            enemyHit.CrossFadeAlpha(1, 0, true);
+            enemyHit.text = "25";
+            enemyHit.CrossFadeAlpha(0, 1, false);
+        }
+        else
+            Debug.Log("Enemy dead");
+    }
+
     public void Hit()
     {
         if (!selfDead)

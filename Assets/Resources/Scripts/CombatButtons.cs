@@ -143,27 +143,24 @@ public class CombatButtons : MonoBehaviour {
         Text item3 = GameObject.Find("txtItem3").GetComponent<Text>();
         Text item4 = GameObject.Find("txtItem4").GetComponent<Text>();
 
+        item1.color = new Color(r: 255, g: 255, b: 255);
+        item2.color = new Color(r: 255, g: 125, b: 255);
+        item3.color = new Color(r: 255, g: 255, b: 255);
+        item4.color = new Color(r: 255, g: 125, b: 255);
+
         switch (num)
         {
             case 1:
                 item1.color = new Color(r: 0, g: 125, b: 255);
-                item4.color = new Color(r: 255, g: 255, b: 255);
-                item2.color = new Color(r: 255, g: 125, b: 255);
                 break;
             case 2:
                 item2.color = new Color(r: 0, g: 125, b: 255);
-                item1.color = new Color(r: 255, g: 255, b: 255);
-                item3.color = new Color(r: 255, g: 125, b: 255);
                 break;
             case 3:
                 item3.color = new Color(r: 0, g: 125, b: 255);
-                item2.color = new Color(r: 255, g: 255, b: 255);
-                item4.color = new Color(r: 255, g: 125, b: 255);
                 break;
             case 4:
                 item4.color = new Color(r: 0, g: 125, b: 255);
-                item3.color = new Color(r: 255, g: 255, b: 255);
-                item1.color = new Color(r: 255, g: 125, b: 255);
                 break;
         }
     }
@@ -225,16 +222,12 @@ public class CombatButtons : MonoBehaviour {
     {
         itemIndex = 1;
         itemBox.SetActive(true);
-        GameObject.Find("txtItem1").GetComponent<Text>().color = new Color(r: 255, g: 255, b: 255);
-        GameObject.Find("txtItem2").GetComponent<Text>().color = new Color(r: 255, g: 125, b: 255);
-        GameObject.Find("txtItem3").GetComponent<Text>().color = new Color(r: 255, g: 255, b: 255);
-        GameObject.Find("txtItem4").GetComponent<Text>().color = new Color(r: 255, g: 125, b: 255);
         ItemBrain(itemIndex);
         GameObject.Find("GameManager").GetComponent<InventoryDisplay>().Refresh();
     }
 
     private void doSkill()
     {
-
+        GameObject.Find("GameManager").GetComponent<Combat>().Special();
     }
 }
