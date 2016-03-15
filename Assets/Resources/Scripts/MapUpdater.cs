@@ -40,11 +40,12 @@ public class MapUpdater : MonoBehaviour {
 
     private void ColorUpdate()
     {   // Sets the highlighting on the map tile
-        current_piece_img.color = Color.red;
+        current_piece_img.color = new Color(0, 0, 0, 1f);
+        current_piece_img.color = Color.gray;
     }
 
     public void Refresh()
-    {   // Operates similarly to Start()
+    {   // Operates similarly to Begin()
         current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
         current_piece_img.color = Color.white; // Resets the highlight color of the map tile

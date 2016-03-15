@@ -38,7 +38,7 @@ public class MapGeneration : MonoBehaviour {
         // Displays the map pieces
         Place();
 
-        // Sets the corresponding backround of the map piece ===============================================================================
+        // Sets the corresponding backround of the map piece
         for (int i = 0; i < pieces.Length; i++)
         {
             switch (pieces [i].GetComponent<Mapping>().index)
@@ -69,9 +69,14 @@ public class MapGeneration : MonoBehaviour {
         for (int i = 0; i < pieces.Length; i++)
         {
             if (pieces [i].GetComponent<Mapping>().index == 1)
+            {
                 pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map_hub");
-            else
+                pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1f);
+            } else
+            {
                 pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map");
+                pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            }
         }
     }
 

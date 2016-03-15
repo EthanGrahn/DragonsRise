@@ -53,7 +53,10 @@
      <Compile Include="Assets\Resources\Scripts\MapGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\MapUpdater.cs" />
      <Compile Include="Assets\Resources\Scripts\Mapping.cs" />
+     <Compile Include="Assets\Resources\Scripts\Preload.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneSwitch.cs" />
+     <Compile Include="Assets\Resources\Scripts\SpecialAttack.cs" />
+     <Compile Include="Assets\Resources\Scripts\SpecialCollisions.cs" />
      <Compile Include="Assets\Resources\Scripts\Stats.cs" />
      <Compile Include="Assets\Resources\Scripts\TravelButtons.cs" />
  <Reference Include="UnityEngine.UI">
