@@ -44,7 +44,7 @@ public class MapGeneration : MonoBehaviour {
             switch (pieces [i].GetComponent<Mapping>().index)
             {
                 case 1:
-                    pieces [i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Background_hub");
+                    pieces [i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
                     break;
                 case 36:
                     
@@ -74,7 +74,7 @@ public class MapGeneration : MonoBehaviour {
                 pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1f);
             } else
             {
-                pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map");
+                pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map_default");
                 pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             }
         }

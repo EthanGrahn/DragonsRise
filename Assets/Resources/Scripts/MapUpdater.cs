@@ -27,10 +27,10 @@ public class MapUpdater : MonoBehaviour {
             switch (current_index)
             {
                 case 1:
-                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_hub");
+                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
                     break;
                 default:
-                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Background_default");
+                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
                     break;
             }  	
 
