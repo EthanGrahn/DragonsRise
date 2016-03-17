@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Resources\Scripts\Combat.cs" />
      <Compile Include="Assets\Resources\Scripts\CombatButtons.cs" />
+     <Compile Include="Assets\Resources\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Resources\Scripts\Inventory.cs" />
      <Compile Include="Assets\Resources\Scripts\InventoryDisplay.cs" />
      <Compile Include="Assets\Resources\Scripts\ItemStats.cs" />

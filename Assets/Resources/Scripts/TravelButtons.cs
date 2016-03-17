@@ -21,9 +21,6 @@ public class TravelButtons : MonoBehaviour {
             current_piece = current_piece.left.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();
-        } else
-        {
-            Debug.Log("You are on the edge of the map.");
         }
     }
 
@@ -34,9 +31,6 @@ public class TravelButtons : MonoBehaviour {
             current_piece = current_piece.right.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();
-        } else
-        {
-            Debug.Log("You are on the edge of the map.");
         }
     }
 
@@ -47,9 +41,6 @@ public class TravelButtons : MonoBehaviour {
             current_piece = current_piece.up.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();
-        } else
-        {
-            Debug.Log("You are on the edge of the map.");
         }
     }
 
@@ -60,9 +51,6 @@ public class TravelButtons : MonoBehaviour {
             current_piece = current_piece.down.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();
-        } else
-        {
-            Debug.Log("You are on the edge of the map.");
         }
     }
 

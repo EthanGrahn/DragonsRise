@@ -13,15 +13,15 @@ public class CombatButtons : MonoBehaviour {
     private Combat combat;
     private GameObject itemBox;
 
-	void Start () {
+    void Awake () {
         selectedIndex = 2;
         itemIndex = 1;
         toneIndex = 1;
 
         //Initialization of the button images
-        fightIcon = GameObject.Find("Fight").GetComponent<Image>();
-        itemIcon = GameObject.Find("Item").GetComponent<Image>();
-        skillIcon = GameObject.Find("Skill").GetComponent<Image>();
+        fightIcon = GameObject.FindGameObjectWithTag("fightIcon").GetComponent<Image>();
+        itemIcon = GameObject.FindGameObjectWithTag("itemIcon").GetComponent<Image>();
+        skillIcon = GameObject.FindGameObjectWithTag("skillIcon").GetComponent<Image>();
 
         //Sets the default opacity of the images
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
@@ -34,13 +34,11 @@ public class CombatButtons : MonoBehaviour {
         itemBox = GameObject.Find("ItemBox");
         itemBox.SetActive(false);
     }
-	
 
 	void Update () {
         //Update checking for key presses
         if (Input.GetKeyUp("left") && !itemBox.activeSelf)
         {
-            //Debug.Log("Left Arrow");
             if (selectedIndex > 1)
             {
                 selectedIndex--;
@@ -49,7 +47,6 @@ public class CombatButtons : MonoBehaviour {
         } 
         else if (Input.GetKeyUp("right") && !itemBox.activeSelf)
         {
-            //Debug.Log("Right Arrow");
             if (selectedIndex < 3)
             {
                 selectedIndex++;
@@ -82,7 +79,7 @@ public class CombatButtons : MonoBehaviour {
             itemIndex--;
             ItemBrain(itemIndex);
         }
-        else if (itemBox.activeSelf && Input.GetKeyUp("down") && itemIndex < 5)
+        else if (itemBox.activeSelf && Input.GetKeyUp("down") && itemIndex < 4)
         {
             itemIndex++;
             ItemBrain(itemIndex);
@@ -95,7 +92,7 @@ public class CombatButtons : MonoBehaviour {
             if (!itemBox.activeSelf)
                 ButtonBrain(selectedIndex);
             else if (itemBox.activeSelf)
-                GameObject.Find("GameManager").GetComponent<InventoryDisplay>().UpdateInventory(itemIndex);
+                GameObject.Find("GameManager").GetComponent<InventoryDisplay>().UseItem(itemIndex);
         }
 
 
@@ -163,6 +160,8 @@ public class CombatButtons : MonoBehaviour {
                 item4.color = new Color(r: 0, g: 125, b: 255);
                 break;
         }
+
+        GameObject.Find("GameManager").GetComponent<InventoryDisplay>().UpdateDescription(itemIndex);
     }
 
     private void ToneAdjust(int num)
@@ -214,7 +213,6 @@ public class CombatButtons : MonoBehaviour {
 
     private void doFight()
     {
-        Debug.Log("Fighting...");
         combat.Attack();
     }
 
@@ -224,10 +222,12 @@ public class CombatButtons : MonoBehaviour {
         itemBox.SetActive(true);
         ItemBrain(itemIndex);
         GameObject.Find("GameManager").GetComponent<InventoryDisplay>().Refresh();
+        GameObject.Find("GameManager").GetComponent<InventoryDisplay>().UpdateDescription(1);
     }
 
     private void doSkill()
     {
-        GameObject.Find("GameManager").GetComponent<Combat>().Special();
+        if (combat.specialCount == 0)
+            combat.Special();
     }
 }

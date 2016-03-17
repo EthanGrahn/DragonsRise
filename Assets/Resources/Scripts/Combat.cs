@@ -9,9 +9,8 @@ public class Combat : MonoBehaviour {
     private Stats enemyStats;
     private Stats selfStats;
     private bool enemyDead = false;
-    private bool selfDead = false;
-    private bool maxHealth = false;
-    private bool enemyMaxHealth = false;
+    private bool enemyTurnComplete;
+    public int specialCount = 0;
     private Text enemyHit;
     private Text selfHit;
     private Text enemyHealthTxt;
@@ -30,30 +29,19 @@ public class Combat : MonoBehaviour {
 
         healthBar = GameObject.Find("barHealth").GetComponent<RectTransform>();
         bondBar = GameObject.Find("barBond").GetComponent<RectTransform>();
+
+        enemyTurnComplete = GameObject.Find("Enemy").GetComponent<EnemyAI>().turnComplete;
     }
 
     void Update()
     {
-        //Keeps track of various bools during stat checking
-        if (selfStats.current_health == selfStats.max_health)
-            maxHealth = true;
-        else
-            maxHealth = false;
-        
-        if (enemyStats.current_health == enemyStats.max_health)
-            enemyMaxHealth = true;
-        else
-            enemyMaxHealth = false;
-        
+        //Keeps track of various bools during stat checking        
         if (enemyStats.current_health <= 0)
             enemyDead = true;
         else
             enemyDead = false;
-        
-        if (selfStats.current_health <= 0)
-            selfDead = true;
-        else
-            selfDead = false;
+
+        enemyTurnComplete = GameObject.Find("Enemy").GetComponent<EnemyAI>().turnComplete;
 
         healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
         bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);
@@ -87,7 +75,7 @@ public class Combat : MonoBehaviour {
 
     public void Attack()
     {
-        if (!enemyDead)
+        if (!enemyDead && enemyTurnComplete)
         {
             //Calls function to calculate amount of damage dealt
             double attackAmt = attackCheck(selfStats);
@@ -105,7 +93,11 @@ public class Combat : MonoBehaviour {
 
     public void Special()
     {
-        GameObject.Find("specialSpawn").GetComponent<SpecialAttack>().Fire();
+        if (!enemyDead && enemyTurnComplete)
+        {
+            specialCount++;
+            GameObject.Find("specialSpawn").GetComponent<SpecialAttack>().Fire();
+        }
     }
 
     public void SpecialHit()
@@ -122,23 +114,7 @@ public class Combat : MonoBehaviour {
         }
         else
             Debug.Log("Enemy dead");
-    }
 
-    public void Hit()
-    {
-        if (!selfDead)
-        {
-            //Calls function to calculate damage dealt
-            double attackAmt = attackCheck(enemyStats);
-            selfStats.damage(attackAmt);
-
-            //Display attack damage
-            selfHit.color = Color.red;
-            selfHit.CrossFadeAlpha(1, 0, true);
-            selfHit.text = attackAmt.ToString();
-            selfHit.CrossFadeAlpha(0, 1, false);
-        } 
-        else
-            Debug.Log("You are dead");
+        specialCount--;
     }
 }
