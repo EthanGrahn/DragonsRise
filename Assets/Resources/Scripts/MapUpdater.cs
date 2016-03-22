@@ -22,7 +22,7 @@ public class MapUpdater : MonoBehaviour {
 	
 	void Update () 
     {
-        if (started) // only starts the update after the Map Generation is complete
+        if (started)
         {
             switch (current_index)
             {

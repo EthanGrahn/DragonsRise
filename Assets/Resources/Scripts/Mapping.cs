@@ -9,4 +9,5 @@ public class Mapping : MonoBehaviour {
     public GameObject down;
     public GameObject right;
     public Sprite background_img;
+    public bool enemyEncounter;
 }

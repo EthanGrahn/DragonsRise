@@ -10,22 +10,33 @@ public class MapGeneration : MonoBehaviour {
     public int current_index;
 
 	// Begins Generation
-	void Start ()
+	void Awake ()
     {
-        Random.seed = (int)System.DateTime.Now.Ticks;
-        current_index = 1;
+        GameObject.Find("MapManager").GetComponent<MapCanvas>().Check();
 
-        // Stores all map pieces
-        for (int i = 0; i < pieces.Length; i++)
-            pieces [i] = GameObject.Find("Map_" + (i + 1));
+        if (GameObject.Find("MapManager").GetComponent<MapCanvas>().generated == false)
+        { 
+            Random.seed = (int)System.DateTime.Now.Ticks;
+            current_index = 1;
 
-        // Scramble the array for indexing purposes
-        Scramble();
+            // Stores all map pieces
+            for (int i = 0; i < pieces.Length; i++)
+                pieces [i] = GameObject.Find("Map_" + (i + 1));
 
-        // Sets the index and where each direction leads
-        Generate();
+            // Scramble the array for indexing purposes
+            Scramble();
 
-        // Calls the start of the MapUpdater
+            // Sets the index and where each direction leads
+            Generate();
+
+            GameObject.Find("MapManager").GetComponent<MapCanvas>().generated = true;
+        }
+        else
+        {
+            pieces = GameObject.Find("MapManager").GetComponent<MapCanvas>().pieces;
+            current_index = GameObject.Find("MapManager").GetComponent<MapCanvas>().current_index;
+        }
+
         Done();
     }
 
@@ -38,7 +49,7 @@ public class MapGeneration : MonoBehaviour {
         // Displays the map pieces
         Place();
 
-        // Sets the corresponding backround of the map piece
+        int rand = 0;
         for (int i = 0; i < pieces.Length; i++)
         {
             switch (pieces [i].GetComponent<Mapping>().index)
@@ -46,10 +57,16 @@ public class MapGeneration : MonoBehaviour {
                 case 1:
                     pieces [i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
                     break;
-                case 36:
-                    
+                default:
+                    pieces[i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
                     break;
             }
+
+            rand = Random.Range(1, 4);
+            if (rand == 4)
+                pieces[i].GetComponent<Mapping>().enemyEncounter = true;
+            else
+                pieces[i].GetComponent<Mapping>().enemyEncounter = false;
         }
     }
 

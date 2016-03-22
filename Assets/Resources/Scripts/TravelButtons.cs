@@ -48,6 +48,7 @@ public class TravelButtons : MonoBehaviour {
     {
         if (current_piece.down != null)
         {
+            Debug.Log("Check");
             current_piece = current_piece.down.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();
