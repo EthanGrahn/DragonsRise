@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Combat : MonoBehaviour {
 
@@ -8,15 +9,21 @@ public class Combat : MonoBehaviour {
     public GameObject enemy;
     private Stats enemyStats;
     private Stats selfStats;
+
     private bool enemyDead = false;
-    private bool enemyTurnComplete;
+    public bool enemyTurnComplete;
     public int specialCount = 0;
+
     private Text enemyHit;
     private Text selfHit;
     private Text enemyHealthTxt;
     private Text selfHealthTxt;
+
     private RectTransform healthBar;
     private RectTransform bondBar;
+
+    private Image fadePanel;
+    private GameObject canvas;
 
     void Start()
     {
@@ -30,18 +37,20 @@ public class Combat : MonoBehaviour {
         healthBar = GameObject.Find("barHealth").GetComponent<RectTransform>();
         bondBar = GameObject.Find("barBond").GetComponent<RectTransform>();
 
-        enemyTurnComplete = GameObject.Find("Enemy").GetComponent<EnemyAI>().turnComplete;
+        enemyTurnComplete = true;
+
+        fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
+        canvas = GameObject.Find("FadeCanvas");
+        canvas.SetActive(false);
     }
 
     void Update()
-    {
-        //Keeps track of various bools during stat checking        
-        if (enemyStats.current_health <= 0)
+    {      
+        if (enemyStats.current_health <= 0 && !enemyDead)
+        {
             enemyDead = true;
-        else
-            enemyDead = false;
-
-        enemyTurnComplete = GameObject.Find("Enemy").GetComponent<EnemyAI>().turnComplete;
+            StartCoroutine(Finish(1));
+        }
 
         healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
         bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);
@@ -86,14 +95,12 @@ public class Combat : MonoBehaviour {
             enemyHit.CrossFadeAlpha(1, 0, true);
             enemyHit.text = attackAmt.ToString();
             enemyHit.CrossFadeAlpha(0, 1, false);
-        } 
-        else
-            Debug.Log("Enemy dead");
+        }
     }
 
     public void Special()
     {
-        if (!enemyDead && enemyTurnComplete)
+        if (!enemyDead && enemyTurnComplete && specialCount == 0)
         {
             specialCount++;
             GameObject.Find("specialSpawn").GetComponent<SpecialAttack>().Fire();
@@ -102,19 +109,38 @@ public class Combat : MonoBehaviour {
 
     public void SpecialHit()
     {
-        if (!enemyDead)
-        {
-            enemyStats.damage(25);
+        enemyStats.damage(25);
 
-            //Display attack damage
-            enemyHit.color = Color.red;
-            enemyHit.CrossFadeAlpha(1, 0, true);
-            enemyHit.text = "25";
-            enemyHit.CrossFadeAlpha(0, 1, false);
-        }
-        else
-            Debug.Log("Enemy dead");
+        //Display attack damage
+        enemyHit.color = Color.red;
+        enemyHit.CrossFadeAlpha(1, 0, true);
+        enemyHit.text = "25";
+        enemyHit.CrossFadeAlpha(0, 1, false);
 
         specialCount--;
+    }
+
+    public IEnumerator Finish(int val)
+    {
+        Debug.Log("Finish");
+        canvas.SetActive(true);
+        GameObject defeat = GameObject.Find("txtDefeat");
+        GameObject victory = GameObject.Find("txtVictory");
+        defeat.SetActive(false);
+        victory.SetActive(false);
+
+        if (val == 1)
+        {
+            victory.SetActive(true);
+            GameObject.Find("MapManager").GetComponent<MapCanvas>().defeated = true;
+        }
+        else
+            defeat.SetActive(true);
+            
+
+        fadePanel.CrossFadeAlpha(0, 0, false);
+        fadePanel.CrossFadeAlpha(1, 2, false);
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Map");
     }
 }

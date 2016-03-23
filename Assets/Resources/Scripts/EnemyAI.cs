@@ -27,12 +27,16 @@ public class EnemyAI : MonoBehaviour {
 
 	void Update () 
     {
-        if (charStats.current_health <= 0)
+        if (charStats.current_health <= 0 && !charDead)
+        {
             charDead = true;
+            StartCoroutine(GameObject.Find("GameManager").GetComponent<Combat>().Finish(2));
+        }
 
         if (stats.current_health < health)
         {
             turnComplete = false;
+            GameObject.Find("GameManager").GetComponent<Combat>().enemyTurnComplete = false;
             health = stats.current_health;
             StartCoroutine(Hit());
         }
@@ -62,11 +66,10 @@ public class EnemyAI : MonoBehaviour {
             charHit.CrossFadeAlpha(1, 0, true);
             charHit.text = attackAmt.ToString();
             charHit.CrossFadeAlpha(0, 1, false);
-        } 
-        else
-            Debug.Log("You are dead");
+        }
 
         yield return new WaitForSeconds(1f);
         turnComplete = true;
+        GameObject.Find("GameManager").GetComponent<Combat>().enemyTurnComplete = true;
     }
 }

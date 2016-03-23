@@ -63,10 +63,12 @@ public class MapGeneration : MonoBehaviour {
             }
 
             rand = Random.Range(1, 4);
-            if (rand == 4)
+            if (rand == 1 && pieces[i].GetComponent<Mapping>().index != 1)
                 pieces[i].GetComponent<Mapping>().enemyEncounter = true;
             else
                 pieces[i].GetComponent<Mapping>().enemyEncounter = false;
+
+            pieces [i].GetComponent<Mapping>().enemyDefeated = false;
         }
     }
 

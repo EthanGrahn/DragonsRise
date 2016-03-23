@@ -6,17 +6,19 @@ public class TravelButtons : MonoBehaviour {
     private int current_index;
     private GameObject[] pieces;
     private Mapping current_piece;
+    public bool transition;
 
     public void Begin()
     {
         pieces = GameObject.Find("GameManager").GetComponent<MapGeneration>().pieces;
         current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
+        transition = false;
     }
 
 	public void Left()
     {
-        if (current_piece.left != null)
+        if (current_piece.left != null && !transition)
         {
             current_piece = current_piece.left.GetComponent<Mapping>();
             current_index = current_piece.index;
@@ -26,7 +28,7 @@ public class TravelButtons : MonoBehaviour {
 
     public void Right()
     {
-        if (current_piece.right != null)
+        if (current_piece.right != null && !transition)
         {
             current_piece = current_piece.right.GetComponent<Mapping>();
             current_index = current_piece.index;
@@ -36,7 +38,7 @@ public class TravelButtons : MonoBehaviour {
 
     public void Up()
     {
-        if (current_piece.up != null)
+        if (current_piece.up != null && !transition)
         {
             current_piece = current_piece.up.GetComponent<Mapping>();
             current_index = current_piece.index;
@@ -46,9 +48,8 @@ public class TravelButtons : MonoBehaviour {
 
     public void Down()
     {
-        if (current_piece.down != null)
+        if (current_piece.down != null && !transition)
         {
-            Debug.Log("Check");
             current_piece = current_piece.down.GetComponent<Mapping>();
             current_index = current_piece.index;
             Adjust();

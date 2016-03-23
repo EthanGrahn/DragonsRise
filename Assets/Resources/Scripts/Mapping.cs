@@ -10,4 +10,5 @@ public class Mapping : MonoBehaviour {
     public GameObject right;
     public Sprite background_img;
     public bool enemyEncounter;
+    public bool enemyDefeated;
 }

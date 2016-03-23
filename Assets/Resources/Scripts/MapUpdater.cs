@@ -5,7 +5,7 @@ public class MapUpdater : MonoBehaviour {
 
     private int current_index;
     private GameObject[] pieces;
-    private Mapping current_piece;
+    public Mapping current_piece;
     private SpriteRenderer current_piece_img;
     private SpriteRenderer background;
     private bool started = false;
@@ -42,6 +42,11 @@ public class MapUpdater : MonoBehaviour {
     {   // Sets the highlighting on the map tile
         current_piece_img.color = new Color(0, 0, 0, 1f);
         current_piece_img.color = Color.gray;
+    }
+
+    public void Defeat()
+    {
+        current_piece.enemyDefeated = true;
     }
 
     public void Refresh()
