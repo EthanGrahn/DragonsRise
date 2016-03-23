@@ -55,7 +55,7 @@ public class EnemyAI : MonoBehaviour {
 
     private IEnumerator Hit()
     {
-        if (!charDead)
+        if (!charDead && stats.current_health > 0)
         {
             yield return new WaitForSeconds(1f);
             double attackAmt = AttackCheck(stats);
