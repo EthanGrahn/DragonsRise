@@ -122,7 +122,6 @@ public class Combat : MonoBehaviour {
 
     public IEnumerator Finish(int val)
     {
-        Debug.Log("Finish");
         canvas.SetActive(true);
         GameObject defeat = GameObject.Find("txtDefeat");
         GameObject victory = GameObject.Find("txtVictory");
