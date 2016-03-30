@@ -11,4 +11,5 @@ public class Mapping : MonoBehaviour {
     public Sprite background_img;
     public bool enemyEncounter;
     public bool enemyDefeated;
+    public bool marked;
 }

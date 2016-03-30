@@ -74,16 +74,20 @@ public class MapGeneration : MonoBehaviour {
 
         for (int i = 0; i < pieces.Length; i++)
         {
-            pieces [i].SetActive(false);
             check = DeleteCheck(pieces [i]);
-            pieces [i].SetActive(true);
 
             if (check)
             {
                 // Deactivates random tiles
                 rand = Random.Range(1, 36);
-                if (rand <= 12 && pieces [i].GetComponent<Mapping>().index != 1 && pieces [i].GetComponent<Mapping>().index != 36)
-                    pieces [i].SetActive(false);
+                if (rand <= 12 && pieces[i].GetComponent<Mapping>().index != 1 && pieces[i].GetComponent<Mapping>().index != 36)
+                {
+                    pieces[i].SetActive(false);
+                    UpdateConnections(pieces[i].GetComponent<Mapping>().left);
+                    UpdateConnections(pieces[i].GetComponent<Mapping>().right);
+                    UpdateConnections(pieces[i].GetComponent<Mapping>().up);
+                    UpdateConnections(pieces[i].GetComponent<Mapping>().down);
+                }
             }
             check = false;
         }
@@ -99,16 +103,95 @@ public class MapGeneration : MonoBehaviour {
     private bool DeleteCheck(GameObject piece)
     {
         bool good = true;
+        Mapping mapping = piece.GetComponent<Mapping>();
+        GameObject next = null;
+        GameObject nextLeft = null;
+        GameObject nextRight = null;
+        GameObject nextUp = null;
+        GameObject nextDown = null;
+        
+        if (mapping.left != null)
+            next = mapping.left;
+        else if (mapping.right != null)
+            next = mapping.right;
+        else if(mapping.up != null)
+            next = mapping.up;
+        else if (mapping.down != null)
+            next = mapping.down;
 
-        UpdateConnections(piece);
+        if (mapping.left != null)
+            nextLeft = mapping.left;
 
+        if (mapping.right != null)
+            nextRight = mapping.right;
 
+        if (mapping.up != null)
+            nextUp = mapping.up;
+
+        if (mapping.down != null)
+            nextDown = mapping.down;
+
+        if (next != null)
+        {
+            piece.GetComponent<Mapping>().marked = true;
+            FloodFill(next);
+
+            if (nextLeft != null && !nextLeft.GetComponent<Mapping>().marked)
+                good = false;
+            if (nextRight != null && !nextRight.GetComponent<Mapping>().marked)
+                good = false;
+            if (nextUp != null && !nextUp.GetComponent<Mapping>().marked)
+                good = false;
+            if (nextDown != null && !nextDown.GetComponent<Mapping>().marked)
+                good = false;
+
+            for (int i = 0; i < pieces.Length; i++)
+            {
+                pieces[i].GetComponent<Mapping>().marked = false;
+            }
+        }
 
         return good;
     }
 
+    private void FloodFill(GameObject piece)
+    {
+        Mapping mapping = piece.GetComponent<Mapping>();
+
+        if (mapping.marked)
+            return;
+
+        GameObject nextLeft = null;
+        GameObject nextRight = null;
+        GameObject nextUp = null;
+        GameObject nextDown = null;
+
+        mapping.marked = true;
+        nextLeft = mapping.left;
+        nextRight = mapping.right;
+        nextUp = mapping.up;
+        nextDown = mapping.down;
+
+        if (nextLeft != null)
+            FloodFill(nextLeft);
+
+        if (nextRight != null)
+            FloodFill(nextRight);
+
+        if (nextUp != null)
+            FloodFill(nextUp);
+
+        if (nextDown != null)
+            FloodFill(nextDown);
+
+        return;
+    }
+
     private void UpdateConnections(GameObject piece)
     {
+        if (piece == null)
+            return;
+
         Mapping mapping = piece.GetComponent<Mapping>();
 
         if (mapping.down != null && mapping.down.activeSelf == false)
