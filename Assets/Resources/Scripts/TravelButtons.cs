@@ -16,6 +16,18 @@ public class TravelButtons : MonoBehaviour {
         transition = false;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyUp("left"))
+            Left();
+        if (Input.GetKeyUp("right"))
+            Right();
+        if (Input.GetKeyUp("up"))
+            Up();
+        if (Input.GetKeyUp("down"))
+            Down();
+    }
+
 	public void Left()
     {
         if (current_piece.left != null && !transition)

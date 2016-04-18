@@ -21,7 +21,19 @@ public class MapGeneration : MonoBehaviour {
 
             // Stores all map pieces
             for (int i = 0; i < pieces.Length; i++)
+            {
                 pieces [i] = GameObject.Find("Map_" + (i + 1));
+                if (GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces != null)
+                    GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces [i] = pieces [i].GetComponent<Mapping>();
+                else
+                {
+                    pieces [i].GetComponent<Mapping>().right = GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces [i].right;
+                    pieces [i].GetComponent<Mapping>().left = GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces [i].left;
+                    pieces [i].GetComponent<Mapping>().up = GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces [i].up;
+                    pieces [i].GetComponent<Mapping>().down = GameObject.Find("MapManager").GetComponent<MapCanvas>().savedPieces [i].down;
+                }
+            }
+
 
             // Scramble the array for indexing purposes
             Scramble();
@@ -30,6 +42,7 @@ public class MapGeneration : MonoBehaviour {
             Generate();
 
             GameObject.Find("MapManager").GetComponent<MapCanvas>().generated = true;
+            this.GetComponent<MapUpdater>().started = false;
         }
         else
         {
@@ -49,17 +62,6 @@ public class MapGeneration : MonoBehaviour {
         int rand = 0;
         for (int i = 0; i < pieces.Length; i++)
         {
-            // Sets background image
-            switch (pieces [i].GetComponent<Mapping>().index)
-            {
-                case 1:
-                    pieces [i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
-                    break;
-                default:
-                    pieces[i].GetComponent<Mapping>().background_img = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
-                    break;
-            }
-
             // Generates enemy encounters randomly
             rand = Random.Range(1, 4);
             if (rand == 1 && pieces[i].GetComponent<Mapping>().index != 1)
@@ -95,6 +97,9 @@ public class MapGeneration : MonoBehaviour {
         // Sets tile piece adapting to missing tiles
         for (int i = 0; i < pieces.Length; i++)
             UpdateConnections(pieces [i]);
+
+        for (int i = 0; i < pieces.Length; i++)
+            pieces[i].GetComponent<Mapping>().background_img = BackgroundSelector(pieces[i]);
 
         // Displays the map pieces
         Place();
@@ -223,7 +228,13 @@ public class MapGeneration : MonoBehaviour {
             {
                 pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map_hub");
                 pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1f);
-            } else
+            } 
+            else if (pieces [i].GetComponent<Mapping>().index == 36)
+            {
+                pieces [i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/MapPieces/Map_hub");
+                pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            }
+            else
             {
                 pieces [i].GetComponent<SpriteRenderer>().sprite = TileSelector(pieces[i]);
                 pieces [i].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
@@ -279,6 +290,57 @@ public class MapGeneration : MonoBehaviour {
         else
             tile = Resources.Load<Sprite>("Sprites/MapPieces/Map_default");
         
+        return tile;
+    }
+
+    private Sprite BackgroundSelector( GameObject piece )
+    {
+        Sprite tile;
+        bool up = true, right = true, down = true, left = true;
+        Mapping mapping = piece.GetComponent<Mapping>();
+
+        if (mapping.down == null)
+            down = false;
+        if (mapping.up == null)
+            up = false;
+        if (mapping.right == null)
+            right = false;
+        if (mapping.left == null)
+            left = false;
+
+        if (!up && right && down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_LRD");
+        else if (up && !right && down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_LUD");
+        else if (up && right && !down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_LUR");
+        else if (up && right && down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_URD");
+        else if (!up && !right && down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_LD");
+        else if (!up && right && !down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_RL");
+        else if (!up && right && down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_RD");
+        else if (up && !right && !down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_LU");
+        else if (up && !right && down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_UD");
+        else if (up && right && !down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_RU");
+        else if (up && !right && !down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_U");
+        else if (!up && right && !down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_R");
+        else if (!up && !right && down && !left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_D");
+        else if (!up && !right && !down && left)
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_L");
+        else if (!up && !right && !down && !left)
+            tile = null;
+        else
+            tile = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration/exploration_default");
+
         return tile;
     }
 

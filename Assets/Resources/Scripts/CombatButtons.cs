@@ -12,30 +12,40 @@ public class CombatButtons : MonoBehaviour {
     public int toneIndex;
     private Combat combat;
     private GameObject itemBox;
+    private bool started = false;
+    public bool transitioning = false;
+    private Animator charAnimator;
 
-    void Awake () {
+    void Start () {
         selectedIndex = 2;
         itemIndex = 1;
         toneIndex = 1;
-
-        //Initialization of the button images
-        fightIcon = GameObject.FindGameObjectWithTag("fightIcon").GetComponent<Image>();
-        itemIcon = GameObject.FindGameObjectWithTag("itemIcon").GetComponent<Image>();
-        skillIcon = GameObject.FindGameObjectWithTag("skillIcon").GetComponent<Image>();
-
-        //Sets the default opacity of the images
-        fightIcon.color = new Color(1f, 1f, 1f, 1f);
-        itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
-        skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
-
-        //Storing the combat script for ease of use
-        combat = GameObject.Find("GameManager").GetComponent<Combat>();
-
-        itemBox = GameObject.Find("ItemBox");
-        itemBox.SetActive(false);
     }
 
 	void Update () {
+
+        if (!started)
+        {
+            //Storing combat script
+            combat = GameObject.Find("GameManager").GetComponent<Combat>();
+
+            charAnimator = GameObject.Find("Character").GetComponent<Animator>();
+
+            itemBox = GameObject.Find("ItemBox");
+            itemBox.SetActive(false);
+            started = true;
+
+            //Initialization of the button images
+            fightIcon = GameObject.FindGameObjectWithTag("fightIcon").GetComponent<Image>();
+            itemIcon = GameObject.FindGameObjectWithTag("itemIcon").GetComponent<Image>();
+            skillIcon = GameObject.FindGameObjectWithTag("skillIcon").GetComponent<Image>();
+
+            //Sets the default opacity of the images
+            fightIcon.color = new Color(1f, 1f, 1f, 1f);
+            itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
+            skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+        
         //Update checking for key presses
         if (Input.GetKeyUp("left") && !itemBox.activeSelf)
         {
@@ -85,8 +95,6 @@ public class CombatButtons : MonoBehaviour {
             ItemBrain(itemIndex);
         }
 
-
-
         if (Input.GetKeyUp("return"))
         {
             if (!itemBox.activeSelf)
@@ -119,17 +127,20 @@ public class CombatButtons : MonoBehaviour {
 
     private void ButtonBrain(int num)
     {
-        switch (num)
+        if (!transitioning)
         {
-            case 1:
-                doItem();
-                break;
-            case 2:
-                doFight();
-                break;
-            case 3:
-                doSkill();
-                break;
+            switch (num)
+            {
+                case 1:
+                    doItem();
+                    break;
+                case 2:
+                    StartCoroutine(doFight());
+                    break;
+                case 3:
+                    StartCoroutine(doSkill());
+                    break;
+            }
         }
     }
 
@@ -211,9 +222,12 @@ public class CombatButtons : MonoBehaviour {
         skillIcon.color = new Color(1f, 1f, 1f, 1f);
     }
 
-    private void doFight()
+    private IEnumerator doFight()
     {
+        charAnimator.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.5f);
         combat.Attack();
+        charAnimator.ResetTrigger("Attack");
     }
 
     private void doItem()
@@ -225,9 +239,15 @@ public class CombatButtons : MonoBehaviour {
         GameObject.Find("GameManager").GetComponent<InventoryDisplay>().UpdateDescription(1);
     }
 
-    private void doSkill()
+    private IEnumerator doSkill()
     {
         if (combat.specialCount == 0)
+        {
+            charAnimator.SetTrigger("Special");
+            yield return new WaitForSeconds(0.75f);
             combat.Special();
+            yield return new WaitForSeconds(0.25f);
+            charAnimator.ResetTrigger("Special");
+        }
     }
 }

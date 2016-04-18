@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitDragon.CSharp", "GitDragon.CSharp.csproj", "{60BF7000-FBCD-46F7-1F3D-70EA6F05692B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{AC6BBF63-806D-1518-3119-A051AD7E8F25}") = "GitDragon", "Assembly-CSharp.csproj", "{A3CF1A04-1653-A5A7-2649-E5DCF376E696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60BF7000-FBCD-46F7-1F3D-70EA6F05692B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60BF7000-FBCD-46F7-1F3D-70EA6F05692B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60BF7000-FBCD-46F7-1F3D-70EA6F05692B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60BF7000-FBCD-46F7-1F3D-70EA6F05692B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CF1A04-1653-A5A7-2649-E5DCF376E696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CF1A04-1653-A5A7-2649-E5DCF376E696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CF1A04-1653-A5A7-2649-E5DCF376E696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CF1A04-1653-A5A7-2649-E5DCF376E696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

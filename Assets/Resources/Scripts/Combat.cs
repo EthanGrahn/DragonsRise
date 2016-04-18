@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Combat : MonoBehaviour {
-//
+
     public GameObject self;
     public GameObject enemy;
     private Stats enemyStats;
@@ -13,6 +13,7 @@ public class Combat : MonoBehaviour {
     private bool enemyDead = false;
     public bool enemyTurnComplete;
     public int specialCount = 0;
+    private double health;
 
     private Text enemyHit;
     private Text selfHit;
@@ -24,16 +25,20 @@ public class Combat : MonoBehaviour {
 
     private Image fadePanel;
     private GameObject canvas;
+    private GameObject itemBox;
+    private Animator charAnimator;
 
     void Start()
     {
-        //Initializes stat veriables along with overhead text boxes
+        //Stat variables
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
 
+        //Hit text boxes
         selfHit = GameObject.Find("txtSelfHit").GetComponent<Text>();
         enemyHit = GameObject.Find("txtEnemyHit").GetComponent<Text>();
 
+        //Health bars
         healthBar = GameObject.Find("barHealth").GetComponent<RectTransform>();
         bondBar = GameObject.Find("barBond").GetComponent<RectTransform>();
 
@@ -42,6 +47,9 @@ public class Combat : MonoBehaviour {
         fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
         canvas = GameObject.Find("FadeCanvas");
         canvas.SetActive(false);
+
+        health = selfStats.current_health;
+        charAnimator = GameObject.Find("Character").GetComponent<Animator>();
     }
 
     void Update()
@@ -50,6 +58,12 @@ public class Combat : MonoBehaviour {
         {
             enemyDead = true;
             StartCoroutine(Finish(1));
+        }
+
+        if (selfStats.current_health < health)
+        {
+            health = selfStats.current_health;
+            StartCoroutine(Hit());
         }
 
         healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
@@ -80,6 +94,13 @@ public class Combat : MonoBehaviour {
         }
 
         return damage;
+    }
+
+    private IEnumerator Hit()
+    {
+        charAnimator.SetTrigger("Damage");
+        yield return new WaitForSeconds(0.583f);
+        charAnimator.ResetTrigger("Damage");
     }
 
     public void Attack()
@@ -123,6 +144,7 @@ public class Combat : MonoBehaviour {
     public IEnumerator Finish(int val)
     {
         canvas.SetActive(true);
+        this.GetComponent<CombatButtons>().transitioning = true;
         GameObject defeat = GameObject.Find("txtDefeat");
         GameObject victory = GameObject.Find("txtVictory");
         defeat.SetActive(false);

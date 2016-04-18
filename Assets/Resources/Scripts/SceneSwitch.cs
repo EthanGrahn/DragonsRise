@@ -12,16 +12,12 @@ public class SceneSwitch : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            Debug.Log("Escape");
-        }
+
     }
 
     public void SwitchScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-       //Debug.Log("Scene changed to " + sceneName);
     }
 
     public void EndGame()

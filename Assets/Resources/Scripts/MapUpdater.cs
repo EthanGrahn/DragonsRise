@@ -8,7 +8,7 @@ public class MapUpdater : MonoBehaviour {
     public Mapping current_piece;
     private SpriteRenderer current_piece_img;
     private SpriteRenderer background;
-    private bool started = false;
+    public bool started = false;
 
 	public void Begin () 
     {
@@ -24,15 +24,7 @@ public class MapUpdater : MonoBehaviour {
     {
         if (started)
         {
-            switch (current_index)
-            {
-                case 1:
-                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
-                    break;
-                default:
-                    background.sprite = Resources.Load<Sprite>("Sprites/Backgrounds/Exploration_bg");
-                    break;
-            }  	
+            background.sprite = current_piece.GetComponent<Mapping>().background_img;	
 
             ColorUpdate();
         }

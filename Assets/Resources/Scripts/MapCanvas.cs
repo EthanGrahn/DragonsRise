@@ -7,6 +7,7 @@ public class MapCanvas : MonoBehaviour {
     public bool generated;
     private GameObject map;
     public GameObject[] pieces = new GameObject[36];
+    public Mapping[] savedPieces = new Mapping[36];
     public int current_index;
     public bool defeated;
 
@@ -28,10 +29,19 @@ public class MapCanvas : MonoBehaviour {
             defeated = false;
         }
 
-        if (SceneManager.GetActiveScene().name == "Map")
+        if (SceneManager.GetActiveScene().name == "Map" && generated)
         {
             current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
             defeated = GameObject.Find("GameManager").GetComponent<MapUpdater>().current_piece.enemyDefeated;
+        }
+
+        if (SceneManager.GetActiveScene().name == "MainMenu" && generated)
+        {
+            generated = false;
+            current_index = 1;
+
+            for (int i = 0; i < pieces.Length; i++)
+                pieces [i].SetActive(true);
         }
     }
 
@@ -56,5 +66,20 @@ public class MapCanvas : MonoBehaviour {
         }
         else
             map.SetActive(false);
+    }
+
+    public void ResetConnections()
+    {
+        Mapping mapping = null;
+
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            mapping = pieces [i].GetComponent<Mapping>();
+
+            mapping.left = savedPieces[i].left;
+            mapping.right = savedPieces[i].right;
+            mapping.up = savedPieces[i].up;
+            mapping.down = savedPieces[i].down;
+        }
     }
 }
