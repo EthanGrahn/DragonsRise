@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Combat : MonoBehaviour {
-
+//
     public GameObject self;
     public GameObject enemy;
     private Stats enemyStats;
