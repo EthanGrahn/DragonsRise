@@ -7,6 +7,9 @@
 [Ll]ibrary/
 sysinfo.txt
 *.stackdump
+*.pdb
+*.exe
+DragonsRise_Data/
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #

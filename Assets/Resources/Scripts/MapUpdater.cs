@@ -9,6 +9,7 @@ public class MapUpdater : MonoBehaviour {
     private SpriteRenderer current_piece_img;
     private SpriteRenderer background;
     public bool started = false;
+    private GameObject leftArrow, rightArrow, upArrow, downArrow;
 
 	public void Begin () 
     {
@@ -18,7 +19,11 @@ public class MapUpdater : MonoBehaviour {
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
         current_piece_img = pieces [current_index - 1].GetComponent<SpriteRenderer>();
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
-	}
+        leftArrow = GameObject.Find("Left_btn");
+        rightArrow = GameObject.Find("Right_btn");
+        upArrow = GameObject.Find("Up_btn");
+        downArrow = GameObject.Find("Down_btn");
+    }
 	
 	void Update () 
     {
@@ -27,6 +32,7 @@ public class MapUpdater : MonoBehaviour {
             background.sprite = current_piece.GetComponent<Mapping>().background_img;	
 
             ColorUpdate();
+            ArrowUpdate();
         }
     }
 
@@ -34,6 +40,34 @@ public class MapUpdater : MonoBehaviour {
     {   // Sets the highlighting on the map tile
         current_piece_img.color = new Color(0, 0, 0, 1f);
         current_piece_img.color = Color.gray;
+    }
+
+    private void ArrowUpdate()
+    {
+        GameObject left = current_piece.GetComponent<Mapping>().left;
+        GameObject right = current_piece.GetComponent<Mapping>().right;
+        GameObject up = current_piece.GetComponent<Mapping>().up;
+        GameObject down = current_piece.GetComponent<Mapping>().down;
+
+        if (left == null)
+            leftArrow.SetActive(false);
+        else
+            leftArrow.SetActive(true);
+
+        if (right == null)
+            rightArrow.SetActive(false);
+        else
+            rightArrow.SetActive(true);
+
+        if (up == null)
+            upArrow.SetActive(false);
+        else
+            upArrow.SetActive(true);
+
+        if (down == null)
+            downArrow.SetActive(false);
+        else
+            downArrow.SetActive(true);
     }
 
     public void Defeat()

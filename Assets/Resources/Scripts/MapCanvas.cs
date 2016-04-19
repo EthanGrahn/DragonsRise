@@ -5,7 +5,7 @@ using System.Collections;
 public class MapCanvas : MonoBehaviour {
 
     public bool generated;
-    private GameObject map;
+    public GameObject map;
     public GameObject[] pieces = new GameObject[36];
     public Mapping[] savedPieces = new Mapping[36];
     public int current_index;
@@ -15,13 +15,21 @@ public class MapCanvas : MonoBehaviour {
     {
         generated = false;
         map = GameObject.Find("MiniMapCanvas");
-        map.SetActive(false);
+        map.SetActive(true);
     }
 
     void Update()
     {
         if (SceneManager.GetActiveScene().name != "Map")
             map.SetActive(false);
+
+        if (SceneManager.GetActiveScene().name == "Map" && Input.GetKeyUp("space"))
+        {
+            if (map.activeSelf)
+                map.SetActive(false);
+            else
+                map.SetActive(true);
+        }
 
         if (DefeatCheck())
         {

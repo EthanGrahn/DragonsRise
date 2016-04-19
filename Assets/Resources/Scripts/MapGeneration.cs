@@ -50,6 +50,9 @@ public class MapGeneration : MonoBehaviour {
             current_index = GameObject.Find("MapManager").GetComponent<MapCanvas>().current_index;
         }
 
+
+        GameObject.Find("MapManager").GetComponent<MapCanvas>().map.SetActive(false);
+
         Done();
     }
 

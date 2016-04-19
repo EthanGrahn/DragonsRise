@@ -7,6 +7,7 @@ public class TravelButtons : MonoBehaviour {
     private GameObject[] pieces;
     private Mapping current_piece;
     public bool transition;
+    private bool mapActive;
 
     public void Begin()
     {
@@ -14,17 +15,20 @@ public class TravelButtons : MonoBehaviour {
         current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
         current_piece = pieces [current_index - 1].GetComponent<Mapping>();
         transition = false;
+        mapActive = false;
     }
 
     void Update()
     {
-        if (Input.GetKeyUp("left"))
+        mapActive = GameObject.Find("MapManager").GetComponent<MapCanvas>().map.activeSelf;
+
+        if (Input.GetKeyUp("left") && !mapActive)
             Left();
-        if (Input.GetKeyUp("right"))
+        if (Input.GetKeyUp("right") && !mapActive)
             Right();
-        if (Input.GetKeyUp("up"))
+        if (Input.GetKeyUp("up") && !mapActive)
             Up();
-        if (Input.GetKeyUp("down"))
+        if (Input.GetKeyUp("down") && !mapActive)
             Down();
     }
 

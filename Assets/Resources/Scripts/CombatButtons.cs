@@ -63,7 +63,7 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         }
-        else if (Input.GetKeyUp("q") && !itemBox.activeSelf)
+        else if (Input.GetKeyUp("s") && !itemBox.activeSelf)
         {
             toneIndex--;
 
@@ -72,7 +72,7 @@ public class CombatButtons : MonoBehaviour {
 
             ToneAdjust(toneIndex);
         }
-        else if (Input.GetKeyUp("e") && !itemBox.activeSelf)
+        else if (Input.GetKeyUp("d") && !itemBox.activeSelf)
         {
             toneIndex++;
 
@@ -95,7 +95,7 @@ public class CombatButtons : MonoBehaviour {
             ItemBrain(itemIndex);
         }
 
-        if (Input.GetKeyUp("return"))
+        if (Input.GetKeyUp("x"))
         {
             if (!itemBox.activeSelf)
                 ButtonBrain(selectedIndex);
@@ -105,7 +105,7 @@ public class CombatButtons : MonoBehaviour {
 
 
 
-        if (Input.GetKeyUp("escape") && itemBox.activeSelf)
+        if (Input.GetKeyUp("z") && itemBox.activeSelf)
             itemBox.SetActive(false);
     }
 

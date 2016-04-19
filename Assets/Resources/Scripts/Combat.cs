@@ -10,6 +10,9 @@ public class Combat : MonoBehaviour {
     private Stats enemyStats;
     private Stats selfStats;
 
+    private double currentHealth;
+    private double currentBond;
+
     private bool enemyDead = false;
     public bool enemyTurnComplete;
     public int specialCount = 0;
@@ -22,6 +25,8 @@ public class Combat : MonoBehaviour {
 
     private RectTransform healthBar;
     private RectTransform bondBar;
+    private Image healthFlash;
+    private Image bondFlash;
 
     private Image fadePanel;
     private GameObject canvas;
@@ -34,6 +39,10 @@ public class Combat : MonoBehaviour {
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
 
+        //Current stats to monitor changes in variable
+        currentBond = selfStats.bond;
+        currentHealth = selfStats.current_health;
+
         //Hit text boxes
         selfHit = GameObject.Find("txtSelfHit").GetComponent<Text>();
         enemyHit = GameObject.Find("txtEnemyHit").GetComponent<Text>();
@@ -42,6 +51,13 @@ public class Combat : MonoBehaviour {
         healthBar = GameObject.Find("barHealth").GetComponent<RectTransform>();
         bondBar = GameObject.Find("barBond").GetComponent<RectTransform>();
 
+        //Bars behind health and bond that emphasize the change
+        healthFlash = GameObject.Find("barHealthFlash").GetComponent<Image>();
+        bondFlash = GameObject.Find("barBondFlash").GetComponent<Image>();
+        healthFlash.color = new Color(255f, 255f, 255f, 0f);
+        bondFlash.color = new Color(255f, 255f, 255f, 0f);
+
+        //The following are self explanatory
         enemyTurnComplete = true;
 
         fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
@@ -53,7 +69,17 @@ public class Combat : MonoBehaviour {
     }
 
     void Update()
-    {      
+    {
+        if (currentBond != selfStats.bond)
+        {
+            if (currentBond < selfStats.bond)
+                BondChange(true);
+            else
+                BondChange(false);
+
+            currentBond = selfStats.bond;
+        }
+
         if (enemyStats.current_health <= 0 && !enemyDead)
         {
             enemyDead = true;
@@ -99,8 +125,22 @@ public class Combat : MonoBehaviour {
     private IEnumerator Hit()
     {
         charAnimator.SetTrigger("Damage");
+        healthFlash.color = new Color(255f, 0, 0);
+        healthFlash.CrossFadeAlpha(1f, 0f, false);
+        healthFlash.CrossFadeAlpha(0f, 1.5f, false);
         yield return new WaitForSeconds(0.583f);
         charAnimator.ResetTrigger("Damage");
+    }
+
+    private void BondChange(bool change)
+    {
+        if (change)
+            bondFlash.color = new Color(0, 255f, 0);
+        else
+            bondFlash.color = new Color(255f, 0, 0);
+
+        bondFlash.CrossFadeAlpha(1f, 0f, false);
+        bondFlash.CrossFadeAlpha(0f, 1.5f, false);
     }
 
     public void Attack()
