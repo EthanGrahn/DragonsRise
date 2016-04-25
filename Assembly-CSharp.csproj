@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\CharacterManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Combat.cs" />
      <Compile Include="Assets\Resources\Scripts\CombatButtons.cs" />
      <Compile Include="Assets\Resources\Scripts\EnemyAI.cs" />

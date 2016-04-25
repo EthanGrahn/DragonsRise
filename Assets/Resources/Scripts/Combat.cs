@@ -33,8 +33,10 @@ public class Combat : MonoBehaviour {
     private GameObject itemBox;
     private Animator charAnimator;
 
-    void Start()
+    public void CombatStart()
     {
+        self = GameObject.Find("Character");
+
         //Stat variables
         enemyStats = enemy.GetComponent<Stats>();
         selfStats = self.GetComponent<Stats>();
@@ -60,12 +62,17 @@ public class Combat : MonoBehaviour {
         //The following are self explanatory
         enemyTurnComplete = true;
 
-        fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
         canvas = GameObject.Find("FadeCanvas");
+        fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
         canvas.SetActive(false);
 
         health = selfStats.current_health;
         charAnimator = GameObject.Find("Character").GetComponent<Animator>();
+    }
+
+    void Awake()
+    {
+        
     }
 
     void Update()
@@ -105,16 +112,16 @@ public class Combat : MonoBehaviour {
         {
             case 1:
                 if (bondBar.rect.width < 100)
-                    GameObject.Find("Character").GetComponent<Stats>().bond += 2;
+                    GameObject.Find("Character").GetComponent<Stats>().bond += 5;
                 break;
             case 2:
                 if (bondBar.rect.width < 100)
-                    GameObject.Find("Character").GetComponent<Stats>().bond += 5;
+                    GameObject.Find("Character").GetComponent<Stats>().bond += 10;
                 damage = damage * 0.9;
                 break;
             case 3:
                 if (bondBar.rect.width > 0)
-                    GameObject.Find("Character").GetComponent<Stats>().bond -= 8;
+                    GameObject.Find("Character").GetComponent<Stats>().bond -= 12;
                 damage = damage * 1.5;
                 break;
         }

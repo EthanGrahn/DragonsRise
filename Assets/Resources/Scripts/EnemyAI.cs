@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour {
     public bool turnComplete;
 
 
-	void Start () 
+	public void EnemyStart () 
     {
         stats = this.GetComponent<Stats>();
         charStats = GameObject.Find("Character").GetComponent<Stats>();
