@@ -20,12 +20,10 @@ public class MapCanvas : MonoBehaviour {
 
     void Update()
     {
-        // Deactivates map if it is not the exploration scene
         if (SceneManager.GetActiveScene().name != "Map")
             map.SetActive(false);
 
-        // Used to toggle the minimap during exploration
-        if (SceneManager.GetActiveScene().name == "Map" && Input.GetKeyUp("space") && !GameObject.Find("GameManager").GetComponent<TravelButtons>().transition)
+        if (SceneManager.GetActiveScene().name == "Map" && Input.GetKeyUp("space"))
         {
             if (map.activeSelf)
                 map.SetActive(false);
@@ -34,19 +32,19 @@ public class MapCanvas : MonoBehaviour {
         }
 
         if (DefeatCheck())
-        { // Used to set the tile to defeated once it returns back from the combat scene
+        {
             GameObject.Find("GameManager").GetComponent<MapUpdater>().Defeat();
             defeated = false;
         }
 
         if (SceneManager.GetActiveScene().name == "Map" && generated)
-        { // Matches these variable pairs on the start of the map scene
+        {
             current_index = GameObject.Find("GameManager").GetComponent<MapGeneration>().current_index;
             defeated = GameObject.Find("GameManager").GetComponent<MapUpdater>().current_piece.enemyDefeated;
         }
 
         if (SceneManager.GetActiveScene().name == "MainMenu" && generated)
-        { // This will set the map to regenerate
+        {
             generated = false;
             current_index = 1;
 

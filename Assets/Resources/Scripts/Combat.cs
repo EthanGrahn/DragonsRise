@@ -16,6 +16,7 @@ public class Combat : MonoBehaviour {
     private bool enemyDead = false;
     public bool enemyTurnComplete;
     public int specialCount = 0;
+    private double health;
 
     private Text enemyHit;
     private Text selfHit;
@@ -61,45 +62,49 @@ public class Combat : MonoBehaviour {
         //The following are self explanatory
         enemyTurnComplete = true;
 
-        //Canvas and panel needed for the fade effect
         canvas = GameObject.Find("FadeCanvas");
         fadePanel = GameObject.Find("fadePanel").GetComponent<Image>();
         canvas.SetActive(false);
 
-        //Character animator for triggering events
+        health = selfStats.current_health;
         charAnimator = GameObject.Find("Character").GetComponent<Animator>();
+    }
+
+    void Awake()
+    {
+        
     }
 
     void Update()
     {
         if (currentBond != selfStats.bond)
-        { //Notifies of a bond change
+        {
             if (currentBond < selfStats.bond)
                 BondChange(true);
             else
                 BondChange(false);
 
             currentBond = selfStats.bond;
-            bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);
         }
 
         if (enemyStats.current_health <= 0 && !enemyDead)
-        { //Checks to see if enemy was just killed
+        {
             enemyDead = true;
             StartCoroutine(Finish(1));
         }
 
-        if (selfStats.current_health < currentHealth)
-        { //Checks for a health change
-            currentHealth = selfStats.current_health;
+        if (selfStats.current_health < health)
+        {
+            health = selfStats.current_health;
             StartCoroutine(Hit());
-            healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
         }
 
+        healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
+        bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);
     }
 
     private double attackCheck(Stats tmp)
-    { //Checks tone and characters attack to decide damage and bond change
+    {
         int toneIndex = GameObject.Find("GameManager").GetComponent<CombatButtons>().toneIndex;
         double damage = tmp.attack;
 
@@ -125,7 +130,7 @@ public class Combat : MonoBehaviour {
     }
 
     private IEnumerator Hit()
-    { //Is triggered when the character is damaged
+    {
         charAnimator.SetTrigger("Damage");
         healthFlash.color = new Color(255f, 0, 0);
         healthFlash.CrossFadeAlpha(1f, 0f, false);
@@ -135,7 +140,7 @@ public class Combat : MonoBehaviour {
     }
 
     private void BondChange(bool change)
-    { //Creates the flash effect when the bond changes
+    {
         if (change)
             bondFlash.color = new Color(0, 255f, 0);
         else
@@ -146,7 +151,7 @@ public class Combat : MonoBehaviour {
     }
 
     public void Attack()
-    { //Self explanatory
+    {
         if (!enemyDead && enemyTurnComplete)
         {
             //Calls function to calculate amount of damage dealt
@@ -162,7 +167,7 @@ public class Combat : MonoBehaviour {
     }
 
     public void Special()
-    { //Special attack
+    {
         if (!enemyDead && enemyTurnComplete && specialCount == 0)
         {
             specialCount++;
@@ -171,7 +176,7 @@ public class Combat : MonoBehaviour {
     }
 
     public void SpecialHit()
-    { //Triggers when the special projectile hits the enemy
+    {
         enemyStats.damage(25);
 
         //Display attack damage
@@ -184,7 +189,7 @@ public class Combat : MonoBehaviour {
     }
 
     public IEnumerator Finish(int val)
-    { //When either the player or enemy dies, this is called
+    {
         canvas.SetActive(true);
         this.GetComponent<CombatButtons>().transitioning = true;
         GameObject defeat = GameObject.Find("txtDefeat");
@@ -192,7 +197,6 @@ public class Combat : MonoBehaviour {
         defeat.SetActive(false);
         victory.SetActive(false);
 
-        //Will activate the correct text for either winning or losing
         if (val == 1)
         {
             victory.SetActive(true);
@@ -201,7 +205,7 @@ public class Combat : MonoBehaviour {
         else
             defeat.SetActive(true);
             
-        //This section will be modified when death event is decided
+
         fadePanel.CrossFadeAlpha(0, 0, false);
         fadePanel.CrossFadeAlpha(1, 2, false);
         yield return new WaitForSeconds(2f);

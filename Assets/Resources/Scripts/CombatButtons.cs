@@ -24,17 +24,18 @@ public class CombatButtons : MonoBehaviour {
 
 	void Update () {
 
-        if (!started) // Temporary solution ;; fixes issue with these not initializing in build; only in the editor
+        if (!started)
         {
+            //Storing combat script
             combat = GameObject.Find("GameManager").GetComponent<Combat>();
+
             charAnimator = GameObject.Find("Character").GetComponent<Animator>();
 
             itemBox = GameObject.Find("ItemBox");
             itemBox.SetActive(false);
-
             started = true;
 
-            //Icon images
+            //Initialization of the button images
             fightIcon = GameObject.FindGameObjectWithTag("fightIcon").GetComponent<Image>();
             itemIcon = GameObject.FindGameObjectWithTag("itemIcon").GetComponent<Image>();
             skillIcon = GameObject.FindGameObjectWithTag("skillIcon").GetComponent<Image>();
@@ -46,7 +47,7 @@ public class CombatButtons : MonoBehaviour {
         }
         
         //Update checking for key presses
-        if (Input.GetKeyUp("left") && !itemBox.activeSelf) // Combat selection left
+        if (Input.GetKeyUp("left") && !itemBox.activeSelf)
         {
             if (selectedIndex > 1)
             {
@@ -54,7 +55,7 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         } 
-        else if (Input.GetKeyUp("right") && !itemBox.activeSelf) // Combat selection right
+        else if (Input.GetKeyUp("right") && !itemBox.activeSelf)
         {
             if (selectedIndex < 3)
             {
@@ -62,7 +63,7 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         }
-        else if (Input.GetKeyUp("q") && !itemBox.activeSelf) // Tone left
+        else if (Input.GetKeyUp("s") && !itemBox.activeSelf)
         {
             toneIndex--;
 
@@ -71,7 +72,7 @@ public class CombatButtons : MonoBehaviour {
 
             ToneAdjust(toneIndex);
         }
-        else if (Input.GetKeyUp("e") && !itemBox.activeSelf) //Tone right
+        else if (Input.GetKeyUp("d") && !itemBox.activeSelf)
         {
             toneIndex++;
 
@@ -82,7 +83,7 @@ public class CombatButtons : MonoBehaviour {
         }
 
 
-        //Inventory traversal buttons
+
         if (itemBox.activeSelf && Input.GetKeyUp("up") && itemIndex > 1)
         {
             itemIndex--;
@@ -94,7 +95,7 @@ public class CombatButtons : MonoBehaviour {
             ItemBrain(itemIndex);
         }
 
-        if (Input.GetKeyUp("x")) //Accept button
+        if (Input.GetKeyUp("x"))
         {
             if (!itemBox.activeSelf)
                 ButtonBrain(selectedIndex);
@@ -104,12 +105,12 @@ public class CombatButtons : MonoBehaviour {
 
 
 
-        if (Input.GetKeyUp("z") && itemBox.activeSelf) //Cancel button
+        if (Input.GetKeyUp("z") && itemBox.activeSelf)
             itemBox.SetActive(false);
     }
 
     private void ColorBrain(int num)
-    { // Adjusts highlighting of combat icons
+    {
         switch (num)
         {
             case 1:
@@ -125,7 +126,7 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private void ButtonBrain(int num)
-    { // Calls the function pertaining to the selected combat button
+    {
         if (!transitioning)
         {
             switch (num)
@@ -144,7 +145,7 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private void ItemBrain(int num)
-    { // Temporary set up for item selection ;; needs to be dynamic in full game
+    {
         Text item1 = GameObject.Find("txtItem1").GetComponent<Text>();
         Text item2 = GameObject.Find("txtItem2").GetComponent<Text>();
         Text item3 = GameObject.Find("txtItem3").GetComponent<Text>();
@@ -175,7 +176,7 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private void ToneAdjust(int num)
-    { // Currently works as the "animation" of the tone display ;; just changes the words
+    {
         Text leftTone = GameObject.Find("txtTone_left").GetComponent<Text>();
         Text centerTone = GameObject.Find("txtTone_center").GetComponent<Text>();
         Text rightTone = GameObject.Find("txtTone_right").GetComponent<Text>();
@@ -201,28 +202,28 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private void Fight()
-    { // Highlights the fight icon
+    {
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     private void Item()
-    { // Highlights the item icon
+    {
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 1f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     private void Skill()
-    { // Highlights the skill icon
+    {
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private IEnumerator doFight()
-    { // Runs the attack function for the character
+    {
         charAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
         combat.Attack();
@@ -230,7 +231,7 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private void doItem()
-    { // Displays the inventory pop up
+    {
         itemIndex = 1;
         itemBox.SetActive(true);
         ItemBrain(itemIndex);
@@ -239,7 +240,7 @@ public class CombatButtons : MonoBehaviour {
     }
 
     private IEnumerator doSkill()
-    { // Runs the currently active skill ;; set static as fireball currently
+    {
         if (combat.specialCount == 0)
         {
             charAnimator.SetTrigger("Special");
