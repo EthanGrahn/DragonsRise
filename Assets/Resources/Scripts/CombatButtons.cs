@@ -63,7 +63,7 @@ public class CombatButtons : MonoBehaviour {
                 ColorBrain(selectedIndex);
             }
         }
-        else if (Input.GetKeyUp("s") && !itemBox.activeSelf)
+        else if (Input.GetKeyUp("q") && !itemBox.activeSelf)
         {
             toneIndex--;
 
@@ -72,7 +72,7 @@ public class CombatButtons : MonoBehaviour {
 
             ToneAdjust(toneIndex);
         }
-        else if (Input.GetKeyUp("d") && !itemBox.activeSelf)
+        else if (Input.GetKeyUp("e") && !itemBox.activeSelf)
         {
             toneIndex++;
 

@@ -6,7 +6,7 @@ public class CharacterManager : MonoBehaviour {
 
     private Canvas canvas;
     private GameObject character;
-    private bool completed = false;
+    private bool completed;
 
 
     void Start()
@@ -14,6 +14,7 @@ public class CharacterManager : MonoBehaviour {
         character = GameObject.Find("Character");
         canvas = GameObject.Find("buttonCanvas").GetComponentInChildren<Canvas>();
         character.SetActive(false);
+        completed = false;
     }
 
     void Update()
