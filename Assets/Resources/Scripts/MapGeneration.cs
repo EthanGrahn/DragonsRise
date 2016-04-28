@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class MapGeneration : MonoBehaviour {
 
     // 6 x 6 map
-
+    // Should be a 2D array if ever reworked
     public GameObject[] pieces = new GameObject[36];
     public int current_index;
 
@@ -15,7 +15,7 @@ public class MapGeneration : MonoBehaviour {
         GameObject.Find("MapManager").GetComponent<MapCanvas>().Check();
 
         if (GameObject.Find("MapManager").GetComponent<MapCanvas>().generated == false)
-        { 
+        { //This will run when the map is generated or regenerated
             Random.seed = (int)System.DateTime.Now.Ticks;
             current_index = 1;
 
@@ -45,7 +45,7 @@ public class MapGeneration : MonoBehaviour {
             this.GetComponent<MapUpdater>().started = false;
         }
         else
-        {
+        { // Will run if the map is already generated
             pieces = GameObject.Find("MapManager").GetComponent<MapCanvas>().pieces;
             current_index = GameObject.Find("MapManager").GetComponent<MapCanvas>().current_index;
         }
@@ -109,7 +109,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private bool DeleteCheck(GameObject piece)
-    {
+    { // Determines if the tile is okay to be deleted by checking if the map is entirely traversable
         bool good = true;
         Mapping mapping = piece.GetComponent<Mapping>();
         GameObject next = null;
@@ -196,7 +196,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private void UpdateConnections(GameObject piece)
-    {
+    { // Will set null values to the mapping element where tiles are deactivated
         if (piece == null)
             return;
 
@@ -246,7 +246,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private Sprite TileSelector( GameObject piece )
-    {
+    { // Sets tile for the minimap based on traversable paths
         Sprite tile;
         bool up = true, right = true, down = true, left = true;
         Mapping mapping = piece.GetComponent<Mapping>();
@@ -297,7 +297,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private Sprite BackgroundSelector( GameObject piece )
-    {
+    { // Sets the background for the current tile based on traversable paths
         Sprite tile;
         bool up = true, right = true, down = true, left = true;
         Mapping mapping = piece.GetComponent<Mapping>();
@@ -348,7 +348,7 @@ public class MapGeneration : MonoBehaviour {
     }
 
     private void Done()
-    {
+    { // Makes sure that these other scripts start after the map is fully generated
         GameObject.Find("GameManager").GetComponent<MapUpdater>().Begin();
         GameObject.Find("GameManager").GetComponent<TravelButtons>().Begin();
     }
