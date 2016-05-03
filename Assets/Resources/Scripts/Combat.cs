@@ -98,6 +98,13 @@ public class Combat : MonoBehaviour {
             health = selfStats.current_health;
             StartCoroutine(Hit());
         }
+        else if (selfStats.current_health > health)
+        {
+            health = selfStats.current_health;
+            healthFlash.color = new Color(0, 255f, 0);
+            healthFlash.CrossFadeAlpha(1f, 0f, false);
+            healthFlash.CrossFadeAlpha(0f, 1.5f, false);
+        }
 
         healthBar.sizeDelta = new Vector2((float)selfStats.current_health, (float)12.2);
         bondBar.sizeDelta = new Vector2((float)selfStats.bond, (float)12.2);

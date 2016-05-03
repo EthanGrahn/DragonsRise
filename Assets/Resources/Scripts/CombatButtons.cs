@@ -15,6 +15,7 @@ public class CombatButtons : MonoBehaviour {
     private bool started = false;
     public bool transitioning = false;
     private Animator charAnimator;
+    private Text dialogue;
 
     void Start () {
         selectedIndex = 2;
@@ -44,6 +45,9 @@ public class CombatButtons : MonoBehaviour {
             fightIcon.color = new Color(1f, 1f, 1f, 1f);
             itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
             skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
+
+            //Dialogue text box
+            dialogue = GameObject.Find("DialogueText").GetComponent<Text>();
         }
         
         //Update checking for key presses
@@ -107,6 +111,9 @@ public class CombatButtons : MonoBehaviour {
 
         if (Input.GetKeyUp("z") && itemBox.activeSelf)
             itemBox.SetActive(false);
+
+        if (Input.GetKeyUp("c"))
+            dialogue.text = "Combat and Item Selection\n        Arrow Keys\nSwitch Tone\n        Q and E\nAccept / Cancel\n        X / Z";
     }
 
     private void ColorBrain(int num)
@@ -206,6 +213,7 @@ public class CombatButtons : MonoBehaviour {
         fightIcon.color = new Color(1f, 1f, 1f, 1f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
+        dialogue.text = "Currently Selected: Fight";
     }
 
     private void Item()
@@ -213,6 +221,7 @@ public class CombatButtons : MonoBehaviour {
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 1f);
         skillIcon.color = new Color(1f, 1f, 1f, 0.5f);
+        dialogue.text = "Currently Selected: Items";
     }
 
     private void Skill()
@@ -220,6 +229,7 @@ public class CombatButtons : MonoBehaviour {
         fightIcon.color = new Color(1f, 1f, 1f, 0.5f);
         itemIcon.color = new Color(1f, 1f, 1f, 0.5f);
         skillIcon.color = new Color(1f, 1f, 1f, 1f);
+        dialogue.text = "Currently Selected: Skill";
     }
 
     private IEnumerator doFight()
@@ -228,6 +238,8 @@ public class CombatButtons : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         combat.Attack();
         charAnimator.ResetTrigger("Attack");
+        dialogue.text = "Your dragon slashes at the enemy!";
+        yield return new WaitForSeconds(1f);
     }
 
     private void doItem()
@@ -243,6 +255,7 @@ public class CombatButtons : MonoBehaviour {
     {
         if (combat.specialCount == 0)
         {
+            dialogue.text = "Your dragon hurls a ball of fire at the enemy!";
             charAnimator.SetTrigger("Special");
             yield return new WaitForSeconds(0.75f);
             combat.Special();

@@ -57,5 +57,10 @@ public class InventoryDisplay : MonoBehaviour {
         string itemName = items[itemIndex - 1].GetComponent<ItemStats>().itemName;
 
         itemBox.text = "using " + itemName + "...";
+
+        if (itemIndex == 4 && GameObject.Find("Character").GetComponent<Stats>().bond != 100)
+            GameObject.Find("Character").GetComponent<Stats>().bond += 8;
+        else if (itemIndex == 3 && GameObject.Find("Character").GetComponent<Stats>().current_health != 100)
+            GameObject.Find("Character").GetComponent<Stats>().current_health += 10;
     }
 }
