@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour {
     private bool charDead;
     private double health;
     public bool turnComplete;
+    private Animator animator;
 
 
 	public void EnemyStart () 
@@ -21,6 +22,7 @@ public class EnemyAI : MonoBehaviour {
         charDead = false;
         turnComplete = true;
         charHit = GameObject.Find("txtSelfHit").GetComponent<Text>();
+        animator = this.GetComponent<Animator>();
         StatCheck();
 	}
 	
@@ -57,7 +59,12 @@ public class EnemyAI : MonoBehaviour {
     {
         if (!charDead && stats.current_health > 0)
         {
+            animator.SetTrigger("Damage");
             yield return new WaitForSeconds(1f);
+            animator.ResetTrigger("Damage");
+            animator.SetTrigger("Attack");
+            yield return new WaitForSeconds(1f);
+            animator.ResetTrigger("Attack");
             double attackAmt = AttackCheck(stats);
             charStats.damage(attackAmt);
 

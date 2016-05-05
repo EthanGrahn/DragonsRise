@@ -1,0 +1,273 @@
+fileFormatVersion: 2
+guid: 87e486b26657b534ab35d7cb17dffa84
+timeCreated: 1462400223
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SnakeAttack_0
+    21300002: SnakeAttack_1
+    21300004: SnakeAttack_2
+    21300006: SnakeAttack_3
+    21300008: SnakeAttack_4
+    21300010: SnakeAttack_5
+    21300012: SnakeAttack_6
+    21300014: SnakeAttack_7
+    21300016: SnakeAttack_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: SnakeAttack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 116
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27.5, y: 21}
+        - {x: -31.5, y: 15}
+        - {x: -33.5, y: 4}
+        - {x: -33.5, y: -7}
+        - {x: -30.5, y: -8}
+        - {x: -26.5, y: -9}
+        - {x: -22.5, y: -5}
+        - {x: -23.5, y: -9}
+        - {x: -27.5, y: -9}
+        - {x: -35.5, y: -12}
+        - {x: -39.5, y: -15}
+        - {x: -39.5, y: -27}
+        - {x: -36.5, y: -29}
+        - {x: 32.5, y: -29}
+        - {x: 44.5, y: -21}
+        - {x: 44.5, y: 2}
+        - {x: 5.5, y: 21}
+    - name: SnakeAttack_1
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 116
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17.5, y: 21}
+        - {x: -26.5, y: 21}
+        - {x: -37.5, y: 19}
+        - {x: -31.5, y: -1}
+        - {x: -26.5, y: -5}
+        - {x: -19.5, y: -5}
+        - {x: -11.5, y: 2}
+        - {x: -18.5, y: -4}
+        - {x: -22.5, y: -9}
+        - {x: -28.5, y: -8}
+        - {x: -39.5, y: -14}
+        - {x: -39.5, y: -27}
+        - {x: -36.5, y: -29}
+        - {x: 32.5, y: -29}
+        - {x: 44.5, y: -20}
+        - {x: 44.5, y: -8}
+        - {x: 43.5, y: -3}
+    - name: SnakeAttack_2
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 116
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23.5, y: 22}
+        - {x: -25.5, y: 20}
+        - {x: -39.5, y: -4}
+        - {x: -39.5, y: -29}
+        - {x: 41.5, y: -29}
+        - {x: 44.5, y: -26}
+        - {x: 44.5, y: 3}
+        - {x: 10.5, y: 22}
+    - name: SnakeAttack_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 58
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16.5, y: 22}
+        - {x: -27.5, y: 22}
+        - {x: -34.5, y: 21}
+        - {x: -39.5, y: 5}
+        - {x: -39.5, y: -29}
+        - {x: 34.5, y: -29}
+        - {x: 44.5, y: -21}
+        - {x: 44.5, y: -7}
+        - {x: 43.5, y: -3}
+    - name: SnakeAttack_4
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 58
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39.5, y: 22}
+        - {x: -39.5, y: -29}
+        - {x: 38.5, y: -29}
+        - {x: 44.5, y: -21}
+        - {x: 44.5, y: -4}
+        - {x: 10.5, y: 22}
+    - name: SnakeAttack_5
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 58
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16.5, y: 22}
+        - {x: -27.5, y: 22}
+        - {x: -34.5, y: 21}
+        - {x: -39.5, y: 5}
+        - {x: -39.5, y: -29}
+        - {x: 34.5, y: -29}
+        - {x: 44.5, y: -21}
+        - {x: 44.5, y: -7}
+        - {x: 43.5, y: -3}
+    - name: SnakeAttack_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23.5, y: 22}
+        - {x: -25.5, y: 20}
+        - {x: -39.5, y: -4}
+        - {x: -39.5, y: -29}
+        - {x: 41.5, y: -29}
+        - {x: 44.5, y: -26}
+        - {x: 44.5, y: 3}
+        - {x: 10.5, y: 22}
+    - name: SnakeAttack_7
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 0
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17.5, y: 21}
+        - {x: -26.5, y: 21}
+        - {x: -37.5, y: 19}
+        - {x: -31.5, y: -1}
+        - {x: -26.5, y: -5}
+        - {x: -19.5, y: -5}
+        - {x: -11.5, y: 2}
+        - {x: -18.5, y: -4}
+        - {x: -22.5, y: -9}
+        - {x: -28.5, y: -8}
+        - {x: -39.5, y: -14}
+        - {x: -39.5, y: -27}
+        - {x: -36.5, y: -29}
+        - {x: 32.5, y: -29}
+        - {x: 44.5, y: -20}
+        - {x: 44.5, y: -8}
+        - {x: 43.5, y: -3}
+    - name: SnakeAttack_8
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 0
+        width: 89
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27.5, y: 21}
+        - {x: -31.5, y: 15}
+        - {x: -33.5, y: 4}
+        - {x: -33.5, y: -7}
+        - {x: -30.5, y: -8}
+        - {x: -26.5, y: -9}
+        - {x: -22.5, y: -5}
+        - {x: -23.5, y: -9}
+        - {x: -27.5, y: -9}
+        - {x: -35.5, y: -12}
+        - {x: -39.5, y: -15}
+        - {x: -39.5, y: -27}
+        - {x: -36.5, y: -29}
+        - {x: 32.5, y: -29}
+        - {x: 44.5, y: -21}
+        - {x: 44.5, y: 2}
+        - {x: 5.5, y: 21}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
